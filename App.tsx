@@ -1,7 +1,8 @@
+import "./global.css";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
-import "./global.css";
+import Typography from "./src/components/common/Typography";
 
 export default function App() {
   const [isFontsLoaded] = useFonts({
@@ -15,10 +16,8 @@ export default function App() {
 
   return (
     <View className="p-6 bg-background">
-      <Text className="font-binggrae text-xl text-text">감정스냅 시작!</Text>
-      <Text className="font-binggrae-bold text-2xl text-primary mt-2">
-        오늘 기분을 기록해보세요
-      </Text>
+      <Typography variant="h5">오늘 기분을 기록해보세요</Typography>
+      <Typography variant="xl">감정스냅 시작!</Typography>
       <StatusBar style="auto" />
     </View>
   );
