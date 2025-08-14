@@ -30,10 +30,12 @@ const typographyStyles = cva("", {
   },
 });
 
-type Variant = NonNullable<VariantProps<typeof typographyStyles>["variant"]>;
-type Weight = "regular" | "bold" | "auto";
+type VariantType = NonNullable<
+  VariantProps<typeof typographyStyles>["variant"]
+>;
+type WeightType = "regular" | "bold" | "auto";
 
-const isHeading = (v: Variant) =>
+const isHeading = (v: VariantType) =>
   v === "h1" || v === "h2" || v === "h3" || v === "h4" || v === "h5";
 
 export default function Typography({
@@ -42,7 +44,7 @@ export default function Typography({
   className,
   children,
   ...props
-}: TextProps & { variant?: Variant; weight?: Weight }) {
+}: TextProps & { variant?: VariantType; weight?: WeightType }) {
   // auto → 헤딩은 bold, 나머지는 regular
   const resolvedWeight: "regular" | "bold" =
     weight === "auto" ? (isHeading(variant) ? "bold" : "regular") : weight;
