@@ -1,8 +1,8 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { View, ViewStyle, StyleSheet } from "react-native";
-import { gradients, type GradientKeyType } from "../../styles/gradients";
-import { useTheme } from "../../providers/ThemeProvider";
+import { gradients, type GradientKeyType } from "@styles/gradients";
+import { useTheme } from "@providers/ThemeProvider";
 
 interface GradientPropsType {
   variant?: GradientKeyType;

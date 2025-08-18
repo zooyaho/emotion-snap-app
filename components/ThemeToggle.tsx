@@ -1,5 +1,5 @@
 import { Pressable, View } from "react-native";
-import { useTheme } from "../providers/ThemeProvider";
+import { useTheme } from "@providers/ThemeProvider";
 import Feather from "@expo/vector-icons/Feather";
 // import Animated, {
 //   useSharedValue,

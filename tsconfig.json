@@ -3,6 +3,15 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
-    "types": ["nativewind/types"]
+    "types": ["nativewind/types"],
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@providers/*": ["providers/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"]
+    }
   }
 }

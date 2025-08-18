@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { colorScheme } from "nativewind";
-import { themes } from "../utils/color-theme";
+import { themes } from "@utils/color-theme";
 
 interface ThemeProviderPropsType {
   children: React.ReactNode;

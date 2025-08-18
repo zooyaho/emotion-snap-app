@@ -1,11 +1,11 @@
 import { useFonts } from "expo-font";
 import { Text, View } from "react-native";
-import BackgroundView from "./BackgroundView";
+import BackgroundView from "@components/BackgroundView";
 
 function RootLayout({ children }: { children: React.ReactNode }) {
   const [isFontsLoaded] = useFonts({
-    "binggrae-bold": require("../../assets/fonts/Binggrae-Bold.otf"),
-    binggrae: require("../../assets/fonts/Binggrae.otf"),
+    "binggrae-bold": require("@assets/fonts/Binggrae-Bold.otf"),
+    binggrae: require("@assets/fonts/Binggrae.otf"),
   }); // 커스텀 폰트 로드
 
   if (!isFontsLoaded) {

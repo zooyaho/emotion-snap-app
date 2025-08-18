@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import Gradient from "./common/Gradient";
+import Gradient from "@components/common/Gradient";
 
 function BackgroundView({ children }: { children: React.ReactNode }) {
   return (
