@@ -2,9 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 테스트용 */
 @layer utilities {
-  .debug-border {
-    @apply border-2 border-blue-500;
+  /* Headings (Bold) */
+  .text-h1 {
+    @apply text-[28px] leading-[34px] font-binggrae-bold;
+  }
+  .text-h2 {
+    @apply text-[26px] leading-[32px] font-binggrae-bold;
+  }
+  .text-h3 {
+    @apply text-[24px] leading-[30px] font-binggrae-bold;
+  }
+  .text-h4 {
+    @apply text-[20px] leading-[26px] font-binggrae-bold;
+  }
+  .text-h5 {
+    @apply text-[18px] leading-[24px] font-binggrae-bold;
+  }
+
+  /* Body (Regular) */
+  .text-3xl {
+    @apply text-[28px] leading-[34px] font-binggrae;
+  }
+  .text-2xl {
+    @apply text-[26px] leading-[32px] font-binggrae;
+  }
+  .text-xl {
+    @apply text-[22px] leading-[28px] font-binggrae;
+  }
+  .text-lg {
+    @apply text-[20px] leading-[26px] font-binggrae;
+  }
+  .text-base {
+    @apply text-[18px] leading-[24px] font-binggrae;
+  }
+  .text-md {
+    @apply text-[16px] leading-[22px] font-binggrae;
+  }
+  .text-sm {
+    @apply text-[14px] leading-[20px] font-binggrae;
+  }
+  .text-xs {
+    @apply text-[12px] leading-[18px] font-binggrae;
+  }
+  .text-2xs {
+    @apply text-[10px] leading-[16px] font-binggrae;
   }
 }

@@ -16,22 +16,6 @@ module.exports = {
         binggrae: ["binggrae"],
         "binggrae-bold": ["binggrae-bold"],
       },
-      fontSize: {
-        h1: [28, { lineHeight: 34 }],
-        h2: [26, { lineHeight: 32 }],
-        h3: [24, { lineHeight: 30 }],
-        h4: [20, { lineHeight: 26 }],
-        h5: [18, { lineHeight: 24 }],
-        "3xl": [28, { lineHeight: 34 }],
-        "2xl": [26, { lineHeight: 32 }],
-        xl: [22, { lineHeight: 28 }],
-        lg: [20, { lineHeight: 26 }],
-        base: [18, { lineHeight: 24 }],
-        md: [16, { lineHeight: 22 }],
-        sm: [14, { lineHeight: 20 }],
-        xs: [12, { lineHeight: 18 }],
-        "2xs": [10, { lineHeight: 16 }],
-      },
       colors: {
         primary: {
           50: "var(--color-primary-50)",
