@@ -9,9 +9,14 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/light-splash-screen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "dark": {
+        "image": "./assets/dark-splash-screen.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#141417"
+      }
     },
     "ios": {
       "supportsTablet": true
