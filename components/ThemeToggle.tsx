@@ -1,30 +1,30 @@
 import { Pressable, View } from "react-native";
 import { useTheme } from "@providers/ThemeProvider";
 import Feather from "@expo/vector-icons/Feather";
-// import Animated, {
-//   useSharedValue,
-//   useAnimatedStyle,
-//   withSpring,
-// } from "react-native-reanimated";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
 import { useEffect } from "react";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
-  // const translateX = useSharedValue(isDark ? 46 : 3.5);
+  const translateX = useSharedValue(isDark ? 46 : 3.5);
 
-  // useEffect(() => {
-  //   translateX.value = withSpring(isDark ? 46 : 3.5, {
-  //     damping: 15,
-  //     stiffness: 150,
-  //   });
-  // }, [isDark]);
+  useEffect(() => {
+    translateX.value = withSpring(isDark ? 46 : 3.5, {
+      damping: 15,
+      stiffness: 150,
+    });
+  }, [isDark]);
 
-  // const animatedStyle = useAnimatedStyle(() => {
-  //   return {
-  //     transform: [{ translateX: translateX.value }],
-  //   };
-  // });
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
 
   return (
     <Pressable
@@ -33,10 +33,10 @@ const ThemeToggle = () => {
     >
       <Icon icon="sun" />
       <Icon icon="moon" />
-      {/* <Animated.View
+      <Animated.View
         style={[animatedStyle]}
         className="w-10 h-10 bg-background rounded-full items-center justify-center flex flex-row absolute"
-      /> */}
+      />
     </Pressable>
   );
 };
