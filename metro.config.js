@@ -13,4 +13,4 @@ config.resolver.assetExts = config.resolver.assetExts.filter(
 config.resolver.sourceExts.push("svg");
 
 // 마지막에 NativeWind 설정 적용 후 export
-module.exports = withNativeWind(config, { input: "./global.css" });
+module.exports = withNativeWind(config, { input: "./styles/global.css" });

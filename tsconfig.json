@@ -11,7 +11,8 @@
       "@components/*": ["components/*"],
       "@providers/*": ["providers/*"],
       "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@hooks/*": ["hooks/*"]
     }
   }
 }
