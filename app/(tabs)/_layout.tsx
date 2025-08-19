@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import HomeIcon from "@assets/icons/home.svg";
 import HistoryIcon from "@assets/icons/history.svg";
 import StatsIcon from "@assets/icons/stats.svg";
@@ -14,6 +14,7 @@ export default function TabsLayout() {
   const { theme } = useTheme();
   const { active, inactive } = getTabColors(theme);
   const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   // 바(아이템 자체) 높이
   const ITEM_HEIGHT = 56; // 실제 아이콘이 들어가는 영역
@@ -63,26 +64,25 @@ export default function TabsLayout() {
           ),
         }}
       />
-      {/* 모달로 열리는 작성 화면. 탭에는 아이콘만 보이고, 누르면 /mood/add로 이동 */}
+      {/* 탭에는 아이콘만 보이고, 누르면 /mood/add로 이동 */}
       <Tabs.Screen
         name="add"
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault(); // 기본 이동 막고
+            router.push("/mood/add");
+          },
+        }}
         options={{
-          // href: "(tabs)/add",
-          href: "/mood/add",
           title: "추가",
           tabBarIcon: ({ color, size }) => (
-            <View
-              className="flex-1 justify-center mt-[18px]"
-              style={{
-                minHeight: ITEM_HEIGHT, // 56px
-              }}
-            >
+            <>
               {theme === "light" ? (
-                <AddLightIcon color={color} width={32} height={32} />
+                <AddLightIcon width={32} height={32} />
               ) : (
-                <AddDarkIcon color={color} width={32} height={32} />
+                <AddDarkIcon width={32} height={32} />
               )}
-            </View>
+            </>
           ),
         }}
       />

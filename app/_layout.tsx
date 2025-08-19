@@ -18,20 +18,17 @@ export default function RootLayoutWrapper() {
               contentStyle: { backgroundColor: "transparent" },
             }}
           >
-            {/* Bottom Tabs 전체를 하나의 화면으로 취급 */}
+            {/* Bottom Tabs */}
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-            {/* 노트 추가 > 모달: (tabs)/add.tsx를 모달로 표시 */}
+            {/* 감정 노트 추가/읽기/수정 */}
             <Stack.Screen
-              name="(tabs)/add"
+              name="mood/add"
               options={{
-                presentation: "modal",
                 headerShown: true,
                 title: "감정 기록",
               }}
             />
-
-            {/* 읽기/수정: /mood/:moodId, /mood/edit/:moodId */}
             <Stack.Screen
               name="mood/[moodId]"
               options={{ headerShown: true, title: "감정 노트" }}
