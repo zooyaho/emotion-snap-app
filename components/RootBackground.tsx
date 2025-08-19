@@ -4,17 +4,14 @@ import Gradient from "@components/common/Gradient";
 
 interface BackgroundViewPropsType {
   children: React.ReactNode;
-  isInsetDisabled?: boolean; // 필요시 안전영역 비활성화 옵션
 }
 
-function RootBackground({
-  children,
-  isInsetDisabled,
-}: BackgroundViewPropsType) {
-  const Container = isInsetDisabled ? View : SafeAreaView;
-
+function RootBackground({ children }: BackgroundViewPropsType) {
   return (
-    <Container className="flex-1 bg-background">
+    <SafeAreaView
+      className="flex-1 bg-background"
+      edges={["left", "right", "top"]} // bottom 제외하여 안전영역 설정
+    >
       {/* 배경 레이어 */}
       <Gradient
         variant="background"
@@ -25,7 +22,7 @@ function RootBackground({
       />
       {/* 콘텐츠 */}
       {children}
-    </Container>
+    </SafeAreaView>
   );
 }
 

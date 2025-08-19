@@ -1,7 +1,7 @@
 import { vars } from "nativewind";
 
-export const themes = {
-  light: vars({
+export const tokens: Record<"light" | "dark", Record<string, string>> = {
+  light: {
     // primary
     "--color-primary-50": "#FDE1EB",
     "--color-primary-100": "#F5C0D2",
@@ -36,9 +36,9 @@ export const themes = {
 
     // background
     "--color-background": "#F9F9FB",
-  }),
+  },
 
-  dark: vars({
+  dark: {
     // primary
     "--color-primary-50": "#3D2731",
     "--color-primary-100": "#52313E",
@@ -73,5 +73,10 @@ export const themes = {
 
     // background
     "--color-background": "#141417",
-  }),
+  },
+};
+
+export const themes = {
+  light: vars(tokens.light),
+  dark: vars(tokens.dark),
 };

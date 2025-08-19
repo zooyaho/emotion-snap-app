@@ -8,7 +8,7 @@ export default function HomeScreen() {
 
       {/* 상세로 이동 예시 */}
       <Link href="/mood/123" asChild>
-        <Pressable className="mt-4 p-3 rounded-xl bg-gray-100">
+        <Pressable className="mt-4 p-3 rounded-xl">
           <Text>샘플 노트 보기 (/mood/123)</Text>
         </Pressable>
       </Link>

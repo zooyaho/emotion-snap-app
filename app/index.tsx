@@ -1,10 +1,9 @@
-import { View, Text } from "react-native";
+import { Redirect } from "expo-router";
 
-export default function HomeScreen() {
-  return (
-    <View>
-      <Text className="text-h5">text-h5</Text>
-      <Text className="text-base">text-base</Text>
-    </View>
-  );
+/**
+ * 앱 시작 시 가장 먼저 보여줄 화면을 /home으로 고정
+ * 최초 진입 시 자동으로 (tabs)/home 으로 리다이렉트
+ */
+export default function Index() {
+  return <Redirect href="/(tabs)/home" />;
 }
