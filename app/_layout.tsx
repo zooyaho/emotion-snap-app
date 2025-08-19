@@ -19,14 +19,8 @@ export default function RootLayoutWrapper() {
               contentStyle: { backgroundColor: "transparent" },
             }}
           >
-            <Stack.Screen
-              name={ROUTE_NAME.GROUP.TABS}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name={ROUTE_NAME.GROUP.MOOD}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name={ROUTE_NAME.GROUP.TABS} />
+            <Stack.Screen name={ROUTE_NAME.GROUP.MOOD} />
           </Stack>
         </RootLayout>
       </SafeAreaProvider>

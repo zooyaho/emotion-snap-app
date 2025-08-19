@@ -10,6 +10,7 @@ export default function StatsTabsLayout() {
       screenOptions={{
         tabBarIndicatorStyle: { height: 3 },
         tabBarLabelStyle: { fontWeight: "600" },
+        sceneStyle: { backgroundColor: "transparent" },
       }}
     >
       <TopTabs.Screen name="daily" options={{ title: "일간" }} />

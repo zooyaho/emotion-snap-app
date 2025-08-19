@@ -6,14 +6,15 @@ import SettingsIcon from "@assets/icons/settings.svg";
 import AddDarkIcon from "@assets/icons/tab-add-dark.svg";
 import AddLightIcon from "@assets/icons/tab-add-light.svg";
 import { View } from "react-native";
-import { getTabColors } from "@utils/twColors";
+import getBottomTabColors from "@utils/getBottomTabColors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@providers/ThemeProvider";
 import { HREF, ROUTE_NAME } from "consts/routes";
+import { AppHeader } from "@components/common/AppHeader";
 
 export default function TabsLayout() {
   const { theme } = useTheme();
-  const { active, inactive } = getTabColors(theme);
+  const { active, inactive } = getBottomTabColors(theme);
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
@@ -33,7 +34,8 @@ export default function TabsLayout() {
           height: BAR_HEIGHT,
         },
 
-        headerShown: false,
+        headerShown: true,
+        header: () => null,
         tabBarShowLabel: false,
         sceneStyle: { backgroundColor: "transparent" },
         tabBarItemStyle: {
@@ -54,6 +56,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <HomeIcon width={size} height={size} color={color} />
           ),
+          header: () => <AppHeader centerType="logo" />,
         }}
       />
       <Tabs.Screen
@@ -63,6 +66,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <StatsIcon color={color} width={size} height={size} />
           ),
+          header: () => <AppHeader centerType="title" title="감정 통계" />,
         }}
       />
       {/* 탭에는 아이콘만 보이고, 누르면 /mood/add로 이동 */}
@@ -94,6 +98,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <HistoryIcon color={color} width={size} height={size} />
           ),
+          header: () => <AppHeader centerType="title" title="감정 기록함" />,
         }}
       />
       <Tabs.Screen
@@ -103,6 +108,16 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <SettingsIcon color={color} width={size} height={size} />
           ),
+          // header: () => (
+          //   // <AppHeader
+          //   //   centerType="title"
+          //   //   title={"8월14일"}
+          //   //   rightType="close"
+          //   //   isDisabledRight
+          //   // />
+          //   <AppHeader title={"8월14일"} />
+          // ),
+          header: () => <AppHeader centerType="title" title="설정" />,
         }}
       />
     </Tabs>
