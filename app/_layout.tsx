@@ -6,6 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ThemeProvider } from "@providers/ThemeProvider";
 import RootLayout from "@components/RootLayout";
+import { ROUTE_NAME } from "consts/routes";
 
 export default function RootLayoutWrapper() {
   return (
@@ -18,24 +19,13 @@ export default function RootLayoutWrapper() {
               contentStyle: { backgroundColor: "transparent" },
             }}
           >
-            {/* Bottom Tabs */}
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-
-            {/* 감정 노트 추가/읽기/수정 */}
             <Stack.Screen
-              name="mood/add"
-              options={{
-                headerShown: true,
-                title: "감정 기록",
-              }}
+              name={ROUTE_NAME.GROUP.TABS}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="mood/[moodId]"
-              options={{ headerShown: true, title: "감정 노트" }}
-            />
-            <Stack.Screen
-              name="mood/edit/[moodId]"
-              options={{ headerShown: true, title: "감정 노트 수정" }}
+              name={ROUTE_NAME.GROUP.MOOD}
+              options={{ headerShown: false }}
             />
           </Stack>
         </RootLayout>

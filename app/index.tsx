@@ -1,3 +1,4 @@
+import { HREF } from "consts/routes";
 import { Redirect } from "expo-router";
 
 /**
@@ -5,5 +6,5 @@ import { Redirect } from "expo-router";
  * 최초 진입 시 자동으로 (tabs)/home 으로 리다이렉트
  */
 export default function Index() {
-  return <Redirect href="/(tabs)/home" />;
+  return <Redirect href={HREF.tabs.home} />;
 }

@@ -9,6 +9,7 @@ import { View } from "react-native";
 import { getTabColors } from "@utils/twColors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@providers/ThemeProvider";
+import { HREF, ROUTE_NAME } from "consts/routes";
 
 export default function TabsLayout() {
   const { theme } = useTheme();
@@ -22,7 +23,7 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      initialRouteName="home"
+      initialRouteName={ROUTE_NAME.TABS.HOME}
       screenOptions={{
         tabBarActiveTintColor: active,
         tabBarInactiveTintColor: inactive,
@@ -47,7 +48,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name={ROUTE_NAME.TABS.HOME}
         options={{
           title: "홈",
           tabBarIcon: ({ color, size }) => (
@@ -56,7 +57,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="stats"
+        name={ROUTE_NAME.TABS.STATS}
         options={{
           title: "통계",
           tabBarIcon: ({ color, size }) => (
@@ -66,11 +67,11 @@ export default function TabsLayout() {
       />
       {/* 탭에는 아이콘만 보이고, 누르면 /mood/add로 이동 */}
       <Tabs.Screen
-        name="add"
+        name={ROUTE_NAME.TABS.ADD}
         listeners={{
           tabPress: (e) => {
             e.preventDefault(); // 기본 이동 막고
-            router.push("/mood/add");
+            router.push(HREF.mood.add); // /mood/add로 이동
           },
         }}
         options={{
@@ -87,7 +88,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="history"
+        name={ROUTE_NAME.TABS.HISTORY}
         options={{
           title: "기록함",
           tabBarIcon: ({ color, size }) => (
@@ -96,7 +97,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name={ROUTE_NAME.TABS.SETTINGS}
         options={{
           title: "설정",
           tabBarIcon: ({ color, size }) => (
