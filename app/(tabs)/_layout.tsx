@@ -6,7 +6,7 @@ import SettingsIcon from "@assets/icons/settings.svg";
 import AddDarkIcon from "@assets/icons/tab-add-dark.svg";
 import AddLightIcon from "@assets/icons/tab-add-light.svg";
 import { View } from "react-native";
-import getBottomTabColors from "@utils/getBottomTabColors";
+import { getBottomTabColors } from "@utils/colorByTwTokenUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@providers/ThemeProvider";
 import { HREF, ROUTE_NAME } from "consts/routes";
