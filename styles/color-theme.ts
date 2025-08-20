@@ -31,7 +31,9 @@ export const tokens: Record<"light" | "dark", Record<string, string>> = {
     "--color-danger-600": "180 19 19", //  #B41313
 
     // background
-    "--color-background": "249 249 251", // #F9F9FB
+    "--color-background": "249 249 251", // #FAF9F6
+    // technical
+    "--color-technical": "83 84 116", // #535474
   },
   dark: {
     // primary
@@ -64,6 +66,8 @@ export const tokens: Record<"light" | "dark", Record<string, string>> = {
 
     // background
     "--color-background": "20 20 23", // #141417
+    // technical
+    "--color-technical": "126 127 150", // #7E7F96
   },
 };
 

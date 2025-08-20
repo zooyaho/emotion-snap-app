@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
+  presets: [require("nativewind/preset")],
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
@@ -8,7 +8,6 @@ module.exports = {
     "./styles/**/*.{js,jsx,ts,tsx}",
     "./utils/**/*.{js,jsx,ts,tsx}",
   ],
-  presets: [require("nativewind/preset")],
   theme: {
     extend: {
       fontFamily: {
@@ -46,38 +45,8 @@ module.exports = {
           600: "rgb(var(--color-danger-600) / <alpha-value>)",
         },
         background: "rgb(var(--color-background) / <alpha-value>)",
+        technical: "rgb(var(--color-technical) / <alpha-value>)",
       },
-      // colors: {
-      //   primary: {
-      //     50: "var(--color-primary-50)",
-      //     100: "var(--color-primary-100)",
-      //     200: "var(--color-primary-200)",
-      //     300: "var(--color-primary-300)",
-      //     400: "var(--color-primary-400)",
-      //     500: "var(--color-primary-500)",
-      //     600: "var(--color-primary-600)",
-      //   },
-      //   neutral: {
-      //     50: "var(--color-neutral-50)",
-      //     100: "var(--color-neutral-100)",
-      //     200: "var(--color-neutral-200)",
-      //     300: "var(--color-neutral-300)",
-      //     400: "var(--color-neutral-400)",
-      //     500: "var(--color-neutral-500)",
-      //     600: "var(--color-neutral-600)",
-      //   },
-      //   danger: {
-      //     20: "var(--color-danger-20)",
-      //     50: "var(--color-danger-50)",
-      //     100: "var(--color-danger-100)",
-      //     200: "var(--color-danger-200)",
-      //     300: "var(--color-danger-300)",
-      //     400: "var(--color-danger-400)",
-      //     500: "var(--color-danger-500)",
-      //     600: "var(--color-danger-600)",
-      //   },
-      //   background: "var(--color-background)",
-      // },
     },
   },
   plugins: [],

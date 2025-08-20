@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState } from "react";
-import { View } from "react-native";
+import { themes } from "@styles/color-theme";
 import { StatusBar } from "expo-status-bar";
 import { colorScheme } from "nativewind";
-import { themes } from "@styles/color-theme";
+import React, { createContext, useContext, useState } from "react";
+import { useColorScheme, View } from "react-native";
 
 interface ThemeProviderPropsType {
   children: React.ReactNode;
@@ -19,7 +19,10 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 
 export function ThemeProvider({ children }: ThemeProviderPropsType) {
-  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light");
+  const systemColorScheme = useColorScheme();
+  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">(
+    systemColorScheme || "light"
+  );
 
   console.log("ThemeProvider - currentTheme:", currentTheme);
 
