@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer utilities {
-  /* Headings (Bold) */
+  /* ===== Typography Utilities ===== */
+
+  /* === Headings (Bold) === */
   .text-h1 {
     @apply text-[28px] leading-[34px] font-binggrae-bold;
   }
@@ -20,7 +22,7 @@
     @apply text-[18px] leading-[24px] font-binggrae-bold;
   }
 
-  /* Body (Regular) */
+  /* === Body (Regular) === */
   .text-3xl {
     @apply text-[28px] leading-[34px] font-binggrae;
   }
@@ -49,7 +51,74 @@
     @apply text-[10px] leading-[16px] font-binggrae;
   }
 
+  /* ===== Common Utilities ===== */
   .flex-center {
     @apply flex items-center justify-center;
+  }
+
+  /* ===== Elevation Utilities ===== */
+  /* box-shadow: offset-x offset-y blur-radius spread-radius color; */
+
+  /* === CENTER === */
+  .elev-center-low {
+    @apply shadow-[0px_0px_2px_rgba(0,0,0,0.10)];
+  }
+  .elev-center-medium {
+    @apply shadow-[0px_0px_4px_rgba(0,0,0,0.15)];
+  }
+  .elev-center-high {
+    @apply shadow-[0px_0px_8px_rgba(0,0,0,0.20)];
+  }
+
+  .elev-center-low-dark {
+    @apply shadow-[0px_0px_2px_rgba(0,0,0,0.4)];
+  }
+  .elev-center-medium-dark {
+    @apply shadow-[0px_0px_4px_rgba(0,0,0,0.6)];
+  }
+  .elev-center-high-dark {
+    @apply shadow-[0px_0px_8px_rgba(0,0,0,0.8)];
+  }
+
+  /* === UP === */
+  .elev-up-low {
+    @apply shadow-[0px_-1px_2px_rgba(0,0,0,0.10)];
+  }
+  .elev-up-medium {
+    @apply shadow-[0px_-2px_4px_rgba(0,0,0,0.15)];
+  }
+  .elev-up-high {
+    @apply shadow-[0px_-4px_8px_rgba(0,0,0,0.20)];
+  }
+
+  .elev-up-low-dark {
+    @apply shadow-[0px_-1px_2px_rgba(0,0,0,0.4)];
+  }
+  .elev-up-medium-dark {
+    @apply shadow-[0px_-2px_4px_rgba(0,0,0,0.6)];
+  }
+  .elev-up-high-dark {
+    @apply shadow-[0px_-4px_8px_rgba(0,0,0,0.8)];
+  }
+
+  /* === DOWN === */
+  .elev-down-low {
+    @apply shadow-[0px_1px_2px_rgba(0,0,0,0.10)];
+  }
+  .elev-down-medium {
+    @apply shadow-[0px_2px_4px_rgba(0,0,0,0.15)];
+  }
+  .elev-down-high {
+    @apply shadow-[0px_4px_8px_rgba(0,0,0,0.20)];
+  }
+
+  .elev-down-low-dark {
+    @apply shadow-[0px_1px_2px_rgba(0,0,0,0.4)];
+  }
+  .elev-down-medium-dark {
+    @apply shadow-[0px_2px_4px_rgba(0,0,0,0.6)];
+  }
+  .elev-down-high-dark {
+    @apply shadow-[0px_4px_8px_rgba(0,0,0,0.8)];
   }
 }
