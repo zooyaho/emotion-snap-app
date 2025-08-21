@@ -3,9 +3,9 @@ import { cn } from "@utils/cn";
 import { ThemedIonicon } from "@components/common/ThemedIonicon";
 import type Ionicons from "@expo/vector-icons/Ionicons";
 
-type VariantType = "primary" | "secondary" | "outline";
-type SizeType = "md" | "sm" | "xs";
-type IconPositionType = "left" | "right";
+export type VariantType = "primary" | "secondary" | "outline";
+export type SizeType = "md" | "sm" | "xs";
+export type IconPositionType = "left" | "right";
 
 type AppButtonPropsType = {
   title: string;

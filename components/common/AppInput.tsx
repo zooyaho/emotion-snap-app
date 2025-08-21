@@ -6,14 +6,14 @@ import { ThemedIonicon } from "./ThemedIonicon";
 interface AppInputPropsType extends React.ComponentProps<typeof BaseField> {
   variant?: "default" | "search" | "password";
   isError?: boolean;
-  isDisabled?: boolean;
+  disabled?: boolean;
   assistiveText?: string;
 }
 
 export function AppInput({
   variant = "default",
   isError,
-  isDisabled,
+  disabled,
   assistiveText,
   value,
   ...rest
@@ -29,7 +29,7 @@ export function AppInput({
     variant === "password" ? (
       <TouchableOpacity
         onPress={() => setSecure((v) => !v)}
-        disabled={isDisabled}
+        disabled={disabled}
       >
         <ThemedIonicon
           name={secure ? "eye-off" : "eye"}
@@ -45,7 +45,7 @@ export function AppInput({
     <BaseField
       assistiveText={assistiveText}
       isError={isError}
-      isDisabled={isDisabled}
+      disabled={disabled}
       left={left}
       right={right}
       secureTextEntry={secure}

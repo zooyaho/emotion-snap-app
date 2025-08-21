@@ -4,11 +4,11 @@ import { AppInput } from "@components/common/AppInput";
 import { AppTextarea } from "@components/common/AppTextarea";
 import { BaseField } from "@components/common/BaseField";
 import ThemeToggle from "@components/ThemeToggle";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 
 export default function Settings() {
   return (
-    <View className="w-[80%] flex-1 gap-4 ml-5 px-3">
+    <ScrollView className="w-[80%] flex-1 gap-4 ml-5 px-3">
       <Text className="text-[--color-primary-500]">설정</Text>
       {/* <View className="w-40 h-20 rounded-2xl bg-white elev-down-low" />
       <View className="w-40 h-20 rounded-2xl bg-white elev-down-medium" /> */}
@@ -48,6 +48,6 @@ export default function Settings() {
       />
       {/* xs */}
       <AppButton title="Button" variant="outline" size="xs" disabled />
-    </View>
+    </ScrollView>
   );
 }

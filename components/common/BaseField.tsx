@@ -9,7 +9,7 @@ interface BaseFieldPropsType extends TextInputProps {
   left?: ReactNode;
   right?: ReactNode;
   isError?: boolean;
-  isDisabled?: boolean;
+  disabled?: boolean;
   className?: string;
   containerClassName?: string;
   counter?: { current: number; max?: number };
@@ -20,7 +20,7 @@ export function BaseField({
   left,
   right,
   isError,
-  isDisabled,
+  disabled,
   className,
   containerClassName,
   counter,
@@ -41,7 +41,7 @@ export function BaseField({
           // 상태별
           isFocused && "border-primary-500",
           isError && "border-danger-500 bg-danger-50",
-          isDisabled && "border-neutral-100 bg-neutral-50",
+          disabled && "border-neutral-100 bg-neutral-50",
           className
         )}
       >
@@ -50,7 +50,7 @@ export function BaseField({
         ) : null}
 
         <TextInput
-          editable={!isDisabled}
+          editable={!disabled}
           onFocus={(e) => {
             setIsFocused(true);
             onFocus?.(e);
@@ -66,7 +66,7 @@ export function BaseField({
             // multiline도 커버 (textarea에서 높이 커짐)
             "flex-1 text-sm text-neutral-600",
             "min-h-[22px]", // 한줄 높이 보장
-            isDisabled && "text-neutral-200"
+            disabled && "text-neutral-200"
           )}
           {...inputProps}
         />

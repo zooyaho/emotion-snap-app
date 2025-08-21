@@ -4,7 +4,7 @@ type AppTextareaProps = {
   rows?: number; // 초기 높이
   maxLength?: number;
   isError?: boolean;
-  isDisabled?: boolean;
+  disabled?: boolean;
   assistiveText?: string;
 } & Omit<React.ComponentProps<typeof BaseField>, "multiline" | "numberOfLines">;
 
@@ -12,7 +12,7 @@ export function AppTextarea({
   rows = 4,
   maxLength,
   isError,
-  isDisabled,
+  disabled,
   assistiveText,
   value,
   onChangeText,
@@ -24,7 +24,7 @@ export function AppTextarea({
     <BaseField
       assistiveText={assistiveText}
       isError={isError}
-      isDisabled={isDisabled}
+      disabled={disabled}
       multiline
       numberOfLines={rows}
       textAlignVertical="top" // 안드로이드에서 세로 가운데 문제 방지
