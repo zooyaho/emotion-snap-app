@@ -1,10 +1,6 @@
-import { cn } from "@utils/cn";
-import { Pressable, Text, View } from "react-native";
-import { MOOD_OPTIONS } from "../data/mood.data";
-import { MoodIdType } from "../types/mood.type";
-import MoodImage from "./MoodImage";
-import { getMoodHex } from "../utils/moodColors";
 import { AppTextarea } from "@components/common/AppTextarea";
+import { cn } from "@utils/cn";
+import { Text, View } from "react-native";
 
 type MoodNoteCardPropsType = {
   title?: string;

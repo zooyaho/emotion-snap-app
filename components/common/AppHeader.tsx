@@ -1,8 +1,8 @@
-import { memo } from "react";
-import { Platform, Pressable, Text, View, Image } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router } from "expo-router";
 import { cn } from "@utils/cn";
+import { BlurView } from "expo-blur";
+import { router } from "expo-router";
+import { memo } from "react";
+import { Image, Pressable, Text, View } from "react-native";
 import { ThemedIonicon } from "./ThemedIonicon";
 
 /**
@@ -48,75 +48,77 @@ function _AppHeader({
   };
 
   return (
-    <View
-      style={{ height: BAR_HEIGHT }}
-      className={cn("px-5", "border-b border-white/20")}
-    >
-      <View className="flex-row items-center justify-between h-full">
-        {/* LEFT */}
-        <View
-          className={cn(
-            "w-10 h-10 -ml-1 items-start justify-center",
-            centerType === "logo" && "w-0 h-0"
-          )}
-        >
-          {leftType !== "none" && (
-            <Pressable onPress={handleLeft} hitSlop={12}>
-              {leftType === "back" && (
-                <ThemedIonicon
-                  name="chevron-back"
-                  size={24}
-                  colorToken="neutral-500"
-                />
-              )}
-            </Pressable>
-          )}
-        </View>
+    <BlurView intensity={24} tint="light" style={{ height: BAR_HEIGHT }}>
+      <View
+        style={{ height: BAR_HEIGHT }}
+        className={cn("px-5", "border-b border-white/20")}
+      >
+        <View className="flex-row items-center justify-between h-full">
+          {/* LEFT */}
+          <View
+            className={cn(
+              "w-10 h-10 -ml-1 items-start justify-center",
+              centerType === "logo" && "w-0 h-0"
+            )}
+          >
+            {leftType !== "none" && (
+              <Pressable onPress={handleLeft} hitSlop={12}>
+                {leftType === "back" && (
+                  <ThemedIonicon
+                    name="chevron-back"
+                    size={24}
+                    colorToken="neutral-500"
+                  />
+                )}
+              </Pressable>
+            )}
+          </View>
 
-        {/* CENTER */}
-        <View
-          className={cn(
-            "flex-1 items-center justify-center",
-            centerType === "logo" && "items-start"
-          )}
-        >
-          {centerType === "title" ? (
-            <Text numberOfLines={1} className="text-lg text-neutral-500">
-              {title}
-            </Text>
-          ) : centerType === "logo" ? (
-            <Image
-              source={require("@assets/images/logo.png")}
-              style={{
-                width: 54,
-                height: 38,
-                resizeMode: "contain",
-              }}
-            />
-          ) : null}
-        </View>
+          {/* CENTER */}
+          <View
+            className={cn(
+              "flex-1 items-center justify-center",
+              centerType === "logo" && "items-start"
+            )}
+          >
+            {centerType === "title" ? (
+              <Text numberOfLines={1} className="text-lg text-neutral-500">
+                {title}
+              </Text>
+            ) : centerType === "logo" ? (
+              <Image
+                source={require("@assets/images/logo.png")}
+                style={{
+                  width: 54,
+                  height: 38,
+                  resizeMode: "contain",
+                }}
+              />
+            ) : null}
+          </View>
 
-        {/* RIGHT */}
-        <View className="w-10 h-10 items-end justify-center">
-          {rightType !== "none" && (
-            <Pressable
-              onPress={onPressRight}
-              disabled={isDisabledRight}
-              hitSlop={12}
-              className="w-10 h-10 items-center justify-center"
-            >
-              {rightType === "close" && (
-                <ThemedIonicon
-                  name="close"
-                  size={24}
-                  colorToken={isDisabledRight ? "neutral-300" : "neutral-500"}
-                />
-              )}
-            </Pressable>
-          )}
+          {/* RIGHT */}
+          <View className="w-10 h-10 items-end justify-center">
+            {rightType !== "none" && (
+              <Pressable
+                onPress={onPressRight}
+                disabled={isDisabledRight}
+                hitSlop={12}
+                className="w-10 h-10 items-center justify-center"
+              >
+                {rightType === "close" && (
+                  <ThemedIonicon
+                    name="close"
+                    size={24}
+                    colorToken={isDisabledRight ? "neutral-300" : "neutral-500"}
+                  />
+                )}
+              </Pressable>
+            )}
+          </View>
         </View>
       </View>
-    </View>
+    </BlurView>
   );
 }
 
