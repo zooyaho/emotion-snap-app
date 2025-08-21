@@ -27,7 +27,7 @@ export default function MoodPickerCard({
         className
       )}
     >
-      <Text className="text-center text-h5 mb-2">{title}</Text>
+      <Text className="text-center text-h5 mb-2 text-neutral-600">{title}</Text>
 
       <View className="flex-row flex-wrap justify-between items-center h-fit">
         {MOOD_OPTIONS.map((opt) => {

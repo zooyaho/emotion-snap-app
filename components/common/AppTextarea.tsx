@@ -16,10 +16,11 @@ export function AppTextarea({
   assistiveText,
   value,
   onChangeText,
+  style,
   ...rest
 }: AppTextareaProps) {
   const current = typeof value === "string" ? value.length : 0;
-
+  //  counter?: { current: number; max?: number };
   return (
     <BaseField
       assistiveText={assistiveText}
@@ -28,7 +29,7 @@ export function AppTextarea({
       multiline
       numberOfLines={rows}
       textAlignVertical="top" // 안드로이드에서 세로 가운데 문제 방지
-      style={{ minHeight: rows * 24 }} // 자동 높이 증가
+      style={[style, { minHeight: rows * 24 }]}
       maxLength={maxLength}
       counter={maxLength ? { current, max: maxLength } : { current }}
       value={value}
