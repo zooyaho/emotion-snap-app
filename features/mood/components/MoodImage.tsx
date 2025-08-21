@@ -1,5 +1,5 @@
 import { Image, ImageProps } from "react-native";
-import type { MoodIdType } from "../types/mood";
+import type { MoodIdType } from "../types/mood.type";
 import { MOOD_IMAGES } from "../services/moodAssets";
 
 type MoodImagePropsType = {

@@ -1,6 +1,6 @@
 import { Asset } from "expo-asset";
 import type { ImageSourcePropType } from "react-native";
-import type { MoodIdType } from "../types/mood";
+import type { MoodIdType } from "../types/mood.type";
 
 export const MOOD_IMAGES = {
   angry: require("@assets/images/moods/angry.png"),

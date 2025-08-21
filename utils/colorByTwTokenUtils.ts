@@ -4,7 +4,6 @@ import getColorByTwToken from "./getColorByTwToken";
  * rn의 기본 컴포넌트에 color관련 props에 tailwind config에 정의한
  * 색상을 지정하기 위한 함수들입니다.
  */
-
 type SchemeType = "light" | "dark";
 
 /**

@@ -6,6 +6,8 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}",
     "./providers/**/*.{js,jsx,ts,tsx}",
     "./styles/**/*.{js,jsx,ts,tsx}",
+    "./features/**/*.{js,jsx,ts,tsx}",
+    "./types/**/*.{js,jsx,ts,tsx}",
     "./utils/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
@@ -46,6 +48,34 @@ module.exports = {
         },
         background: "rgb(var(--color-background) / <alpha-value>)",
         technical: "rgb(var(--color-technical) / <alpha-value>)",
+
+        /* === Mood Colors === */
+        mood: {
+          angry: {
+            DEFAULT: "#FF843E", // 배경/대표 색
+            text: "#913704", // 텍스트 전용
+          },
+          upset: {
+            DEFAULT: "#8CA4EE",
+            text: "#363F59",
+          },
+          sad: {
+            DEFAULT: "#A1E7EB",
+            text: "#2A696E",
+          },
+          good: {
+            DEFAULT: "#FDDD6F",
+            text: "#635522",
+          },
+          happy: {
+            DEFAULT: "#DFEBFF",
+            text: "#5C6CA1",
+          },
+          spectacular: {
+            DEFAULT: "#FFA7BC",
+            text: "#66424B",
+          },
+        },
       },
     },
   },

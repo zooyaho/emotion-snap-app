@@ -6,7 +6,7 @@ import Sad from "@assets/icons/moods/sad.svg";
 import Good from "@assets/icons/moods/good.svg";
 import Happy from "@assets/icons/moods/happy.svg";
 import Spectacular from "@assets/icons/moods/spectacular.svg";
-import type { MoodIdType } from "@features/mood/types/mood";
+import type { MoodIdType } from "@features/mood/types/mood.type";
 
 const MAP: Record<MoodIdType, React.FC<SvgProps>> = {
   angry: Angry,
