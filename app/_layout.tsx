@@ -6,7 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ThemeProvider } from "@providers/ThemeProvider";
 import RootLayout from "@components/RootLayout";
-import { ROUTE_NAME } from "consts/routes";
+import { ROUTE_NAME } from "@constants/routes";
 
 export default function RootLayoutWrapper() {
   return (

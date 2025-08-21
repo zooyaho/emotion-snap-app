@@ -1,4 +1,4 @@
-import { HREF } from "consts/routes";
+import { HREF } from "@constants/routes";
 import { useLocalSearchParams, Link } from "expo-router";
 import { View, Text } from "react-native";
 

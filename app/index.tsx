@@ -1,4 +1,4 @@
-import { HREF } from "consts/routes";
+import { HREF } from "@constants/routes";
 import { Redirect } from "expo-router";
 
 /**

@@ -9,7 +9,7 @@ import { View } from "react-native";
 import { getBottomTabColors } from "@utils/colorByTwTokenUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@providers/ThemeProvider";
-import { HREF, ROUTE_NAME } from "consts/routes";
+import { HREF, ROUTE_NAME } from "@constants/routes";
 import { AppHeader } from "@components/common/AppHeader";
 
 export default function TabsLayout() {

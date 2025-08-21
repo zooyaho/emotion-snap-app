@@ -11,6 +11,7 @@
       "@components/*": ["components/*"],
       "@providers/*": ["providers/*"],
       "@styles/*": ["styles/*"],
+      "@constants/*": ["constants/*"],
       "@utils/*": ["utils/*"],
       "@hooks/*": ["hooks/*"]
     }
