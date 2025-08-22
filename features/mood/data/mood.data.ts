@@ -1,13 +1,11 @@
-import { MoodOptionType } from "../types/mood.type";
-
-export const MOOD_OPTIONS: MoodOptionType[] = [
+export const MOOD_OPTIONS = [
   { id: "angry", label: "angry" },
   { id: "upset", label: "upset" },
   { id: "sad", label: "sad" },
   { id: "good", label: "good" },
   { id: "happy", label: "happy" },
   { id: "spectacular", label: "spectacular" },
-];
+] as const;
 
 export const moodColors = {
   angry: { DEFAULT: "#FF843E", text: "#913704" },

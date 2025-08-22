@@ -1,21 +1,21 @@
 import BottomButton from "@components/common/BottomButton";
 import MoodPickerCard from "@features/mood/components/MoodPickerCard";
-import { useState } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { MoodIdType } from "../types/mood.type";
 import MoodNoteCard from "../components/MoodNoteCard";
+import useAddMood from "../hooks/useAddMood";
 
 export function MoodAddScreen() {
-  const [mood, setMood] = useState<MoodIdType | null>("spectacular");
-  const [note, setNote] = useState<string>();
+  const { mood, setMood, note, setNote, isValid, submit, loading } =
+    useAddMood();
 
-  const pickedMoodHandler = (pickedMoodId: MoodIdType) => {
-    console.log("pickedMoodId", pickedMoodId);
+  const handleMoodPick = (pickedMoodId: MoodIdType) => {
+    // console.log("pickedMoodId", pickedMoodId);
     setMood(pickedMoodId);
   };
 
-  const noteChangeHandler = (text: string) => {
-    console.log("text", text);
+  const handleNoteChange = (text: string) => {
+    // console.log("text", text);
     setNote(text);
   };
 
@@ -24,19 +24,17 @@ export function MoodAddScreen() {
       <KeyboardAvoidingView behavior={"position"} className="flex-1">
         <ScrollView contentContainerClassName="pb-24 p-6">
           <View className="flex-1 gap-4">
-            <MoodPickerCard value={mood} onChange={pickedMoodHandler} />
-            <MoodNoteCard value={note} onChangeText={noteChangeHandler} />
+            <MoodPickerCard value={mood} onChange={handleMoodPick} />
+            <MoodNoteCard value={note} onChangeText={handleNoteChange} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      {/* Bottom Button */}
+
       <BottomButton
         title="기록"
-        onPress={() => {
-          // console.log(mood);
-          // setMood("angry");
-        }}
-        disabled
+        onPress={submit}
+        disabled={!isValid}
+        // loading={loading}
       />
     </>
   );

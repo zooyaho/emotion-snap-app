@@ -1,6 +1,7 @@
 import { AppTextarea } from "@components/common/AppTextarea";
 import { cn } from "@utils/cn";
 import { Text, View } from "react-native";
+import { MOOD_TEXT_MAX_LENGTH } from "../schemas/mood.schema";
 
 type MoodNoteCardPropsType = {
   title?: string;
@@ -20,7 +21,7 @@ export default function MoodNoteCard({
       )}
     >
       <Text className="text-center text-h5 mb-2 text-neutral-600">{title}</Text>
-      <AppTextarea rows={8} maxLength={500} {...rest} />
+      <AppTextarea rows={8} maxLength={MOOD_TEXT_MAX_LENGTH} {...rest} />
     </View>
   );
 }
