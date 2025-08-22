@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppButton, type VariantType, type SizeType } from "./AppButton";
 import { useTheme } from "@providers/ThemeProvider";
+import { BOTTOM_BAR_HEIGHT } from "@constants/styles.constant";
 
 type BottomButtonPropsType = {
   title: string;
@@ -21,12 +22,16 @@ export default function BottomButton({
 
   return (
     <View
-      style={{ paddingBottom: insets.bottom }}
+      style={{
+        paddingBottom: insets.bottom,
+        height: insets.bottom + BOTTOM_BAR_HEIGHT,
+      }}
       className={cn(
-        "px-4 py-4 bg-neutral-50 elev-up-low",
+        "px-4 py-4 bg-background elev-up-low",
         theme === "dark" && "elev-up-low-dark"
       )}
     >
+      {/* <AppButton title="Button" variant="outline" isLoading size="sm" /> */}
       <AppButton title={title} size="md" variant="primary" {...rest} />
     </View>
   );

@@ -42,7 +42,7 @@ const useAddMood = () => {
     setNote: (n: string) => setValue("note", n, { shouldValidate: true }),
     isValid,
     submit,
-    loading: isSubmitting,
+    isSubmitting: isSubmitting,
     errors,
   };
 };

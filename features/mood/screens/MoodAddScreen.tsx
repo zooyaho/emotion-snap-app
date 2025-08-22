@@ -6,7 +6,7 @@ import MoodNoteCard from "../components/MoodNoteCard";
 import useAddMood from "../hooks/useAddMood";
 
 export function MoodAddScreen() {
-  const { mood, setMood, note, setNote, isValid, submit, loading } =
+  const { mood, setMood, note, setNote, isValid, submit, isSubmitting } =
     useAddMood();
 
   const handleMoodPick = (pickedMoodId: MoodIdType) => {
@@ -34,7 +34,7 @@ export function MoodAddScreen() {
         title="기록"
         onPress={submit}
         disabled={!isValid}
-        // loading={loading}
+        isLoading={isSubmitting}
       />
     </>
   );

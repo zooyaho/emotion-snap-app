@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@providers/ThemeProvider";
 import { HREF, ROUTE_NAME } from "@constants/routes";
 import { AppHeader } from "@components/common/AppHeader";
+import { BOTTOM_BAR_HEIGHT } from "@constants/styles.constant";
 
 export default function TabsLayout() {
   const { theme } = useTheme();
@@ -18,9 +19,7 @@ export default function TabsLayout() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  // 바(아이템 자체) 높이
-  const ITEM_HEIGHT = 56; // 실제 아이콘이 들어가는 영역
-  const BAR_HEIGHT = ITEM_HEIGHT + insets.bottom; // 안전영역 포함 바 전체 높이
+  const BAR_HEIGHT = BOTTOM_BAR_HEIGHT + insets.bottom; // 안전영역 포함 바 전체 높이
 
   return (
     <Tabs
@@ -39,7 +38,7 @@ export default function TabsLayout() {
         tabBarShowLabel: false,
         sceneStyle: { backgroundColor: "transparent" },
         tabBarItemStyle: {
-          height: ITEM_HEIGHT,
+          height: BOTTOM_BAR_HEIGHT,
           paddingVertical: 9,
           // backgroundColor: "rgba(255,0,0,0.1)",
         },
