@@ -1,7 +1,13 @@
-import { Pressable, Text, ViewStyle } from "react-native";
-import { cn } from "@utils/cn";
 import { ThemedIonicon } from "@components/common/ThemedIonicon";
 import type Ionicons from "@expo/vector-icons/Ionicons";
+import { cn } from "@utils/cn";
+import {
+  GestureResponderEvent,
+  Pressable,
+  Text,
+  ViewStyle,
+} from "react-native";
+import LoadingIndicator from "./LoadingIndicator";
 
 export type VariantType = "primary" | "secondary" | "outline";
 export type SizeType = "md" | "sm" | "xs";
@@ -9,7 +15,7 @@ export type IconPositionType = "left" | "right";
 
 type AppButtonPropsType = {
   title: string;
-  onPress?: () => void;
+  onPress?: (event: GestureResponderEvent) => void;
   variant?: VariantType;
   size?: SizeType;
   disabled?: boolean;
@@ -22,6 +28,7 @@ type AppButtonPropsType = {
   iconPosition?: IconPositionType;
   /** 아이콘과 텍스트 간격(px) */
   gap?: number;
+  isLoading?: boolean;
 };
 
 export function AppButton({
@@ -34,6 +41,7 @@ export function AppButton({
   iconName,
   iconPosition = "right",
   gap = 6,
+  isLoading,
 }: AppButtonPropsType) {
   // 사이즈별 높이/패딩/폰트
   const sizeCls = {
@@ -60,7 +68,7 @@ export function AppButton({
     primary: "bg-primary-500 pressed:bg-primary-600 disabled:bg-neutral-200",
     secondary: "bg-primary-50 pressed:bg-primary-100 disabled:bg-neutral-100",
     outline:
-      "border border-primary-500 pressed:bg-primary-50 disabled:border-neutral-300 disabled:bg-neutral-100",
+      "bg-background border border-primary-500 pressed:bg-primary-50 disabled:border-neutral-300 disabled:bg-neutral-100",
   }[variant];
 
   const variantTextCls = {
@@ -82,10 +90,15 @@ export function AppButton({
   // 아이콘 사이 간격
   const gapStyle = { gap };
 
+  const handlePress = (event: GestureResponderEvent) => {
+    if (isLoading) return;
+    onPress?.(event);
+  };
+
   return (
     <Pressable
       disabled={disabled}
-      onPress={onPress}
+      onPress={handlePress}
       className={cn(
         "flex-1 group flex-row items-center justify-center",
         sizeCls.container,
@@ -95,27 +108,37 @@ export function AppButton({
       style={[gapStyle, style]}
       // android_ripple={{ color: "rgba(0,0,0,0.06)", borderless: false }}
     >
-      {iconName && iconPosition === "left" && (
-        <ThemedIonicon
-          name={iconName}
-          size={sizeCls.icon}
-          colorToken={iconColorToken as any}
+      {isLoading ? (
+        <LoadingIndicator
+          color={variant === "primary" ? "background" : "primary"}
+          width={sizeCls.icon + 4}
+          height={sizeCls.icon + 4}
         />
-      )}
+      ) : (
+        <>
+          {iconName && iconPosition === "left" && (
+            <ThemedIonicon
+              name={iconName}
+              size={sizeCls.icon}
+              colorToken={iconColorToken as any}
+            />
+          )}
 
-      <Text
-        className={cn("text-center", sizeCls.text, variantTextCls)}
-        numberOfLines={1}
-      >
-        {title}
-      </Text>
+          <Text
+            className={cn("text-center", sizeCls.text, variantTextCls)}
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
 
-      {iconName && iconPosition === "right" && (
-        <ThemedIonicon
-          name={iconName}
-          size={sizeCls.icon}
-          colorToken={iconColorToken as any}
-        />
+          {iconName && iconPosition === "right" && (
+            <ThemedIonicon
+              name={iconName}
+              size={sizeCls.icon}
+              colorToken={iconColorToken as any}
+            />
+          )}
+        </>
       )}
     </Pressable>
   );

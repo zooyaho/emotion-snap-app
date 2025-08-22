@@ -4,6 +4,7 @@ import { AppInput } from "@components/common/AppInput";
 import { AppModal } from "@components/common/AppModal";
 import { AppTextarea } from "@components/common/AppTextarea";
 import { BaseField } from "@components/common/BaseField";
+import LoadingIndicator from "@components/common/LoadingIndicator";
 import ThemeToggle from "@components/ThemeToggle";
 import useModal from "@hooks/useModal";
 import { useState } from "react";
@@ -34,13 +35,15 @@ export default function Settings() {
       {/* md */}
       <AppButton
         title="Button"
+        // isLoading
         onPress={() => {
           console.log("Click");
         }}
       />
       <AppButton
         title="Button"
-        variant="primary"
+        variant="outline"
+        isLoading
         size="sm"
         iconName="chevron-forward"
       />
@@ -49,20 +52,23 @@ export default function Settings() {
         variant="secondary"
         iconName="chevron-forward"
         iconPosition="left"
+        // isLoading
         onPress={() => modal.open()}
       />
       {/* xs */}
       <AppButton title="Button" variant="outline" size="xs" disabled />
+      <LoadingIndicator />
 
       <AppModal
         controller={modal}
         isDismissOnBackdrop
-        subButton={{ label: "취소", onPress: modal.close }}
+        // subButton={{ label: "취소", onPress: modal.close }}
         mainButton={{
           label: "삭제",
           onPress: () => {
             modal.close();
           },
+          isLoading: true,
         }}
       >
         <View className="flex-center">

@@ -89,7 +89,7 @@ export function AppModal({
                   title={mainButton.label}
                   onPress={mainButton.onPress}
                   disabled={mainButton.isDisabled}
-                  // isLoading={mainButton.isLoading}
+                  isLoading={mainButton.isLoading}
                 />
               )}
             </View>
