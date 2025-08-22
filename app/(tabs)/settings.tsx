@@ -60,15 +60,16 @@ export default function Settings() {
       <LoadingIndicator />
 
       <AppModal
+        title="dkssud"
         controller={modal}
         isDismissOnBackdrop
-        // subButton={{ label: "취소", onPress: modal.close }}
+        subButton={{ label: "취소", onPress: modal.close }}
         mainButton={{
           label: "삭제",
           onPress: () => {
             modal.close();
           },
-          isLoading: true,
+          // isLoading: true,
         }}
       >
         <View className="flex-center">

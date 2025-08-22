@@ -4,10 +4,19 @@ import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { MoodIdType } from "../types/mood.type";
 import MoodNoteCard from "../components/MoodNoteCard";
 import useAddMood from "../hooks/useAddMood";
+import MoodActionCompleteModal from "../components/MoodActionCompleteModal";
 
 export function MoodAddScreen() {
-  const { mood, setMood, note, setNote, isValid, submit, isSubmitting } =
-    useAddMood();
+  const {
+    successModalController,
+    mood,
+    setMood,
+    note,
+    setNote,
+    isValid,
+    submit,
+    isSubmitting,
+  } = useAddMood();
 
   const handleMoodPick = (pickedMoodId: MoodIdType) => {
     // console.log("pickedMoodId", pickedMoodId);
@@ -30,12 +39,34 @@ export function MoodAddScreen() {
         </ScrollView>
       </KeyboardAvoidingView>
 
+      {/* <AppButton
+        title="Modal Show"
+        variant="secondary"
+        iconName="chevron-forward"
+        iconPosition="left"
+        // isLoading
+        onPress={() => successModalController.open()}
+      /> */}
+
       <BottomButton
         title="기록"
         onPress={submit}
         disabled={!isValid}
         isLoading={isSubmitting}
       />
+
+      {/* 기록 성공 시 활성화 모달 */}
+      {mood && (
+        <MoodActionCompleteModal
+          controller={successModalController}
+          moodId={mood}
+          desc="기록 완료!"
+          handleConfirmPress={() => {
+            successModalController.close();
+            // router.back();
+          }}
+        />
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Image, ImageProps } from "react-native";
+import { Image, ImageProps, ImageResizeMode } from "react-native";
 import type { MoodIdType } from "../types/mood.type";
 import { MOOD_IMAGES } from "../services/moodAssets";
 
@@ -6,12 +6,14 @@ type MoodImagePropsType = {
   name: MoodIdType;
   width?: number;
   height?: number;
-} & Omit<ImageProps, "source">;
+  resizeMode?: ImageResizeMode;
+} & Omit<ImageProps, "source" | "resizeMode">;
 
 export default function MoodImage({
   name,
   width = 64,
   height = 64,
+  resizeMode = "contain",
   style,
   ...rest
 }: MoodImagePropsType) {
@@ -19,6 +21,7 @@ export default function MoodImage({
     <Image
       source={MOOD_IMAGES[name]}
       style={[{ width, height }, style]}
+      resizeMode={resizeMode}
       {...rest}
     />
   );

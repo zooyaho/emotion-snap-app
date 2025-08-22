@@ -8,6 +8,8 @@ import {
 import { v4 as uuid } from "uuid";
 import { addMoodEntry } from "../services/moodStorage";
 import { router } from "expo-router";
+import useModal from "@hooks/useModal";
+import { Alert } from "react-native";
 
 const useAddMood = () => {
   const {
@@ -23,16 +25,21 @@ const useAddMood = () => {
       note: "",
     },
   });
+  const successModalController = useModal();
 
   const submit = handleSubmit(async (data) => {
     console.log("Submit Data :: ", data);
-    await addMoodEntry({
-      id: uuid(),
-      mood: data.mood as MoodIdType,
-      note: data.note?.trim() || "",
-      createdAt: Date.now(),
-    });
-    router.back();
+    try {
+      // await addMoodEntry({
+      //   id: uuid(),
+      //   mood: data.mood as MoodIdType,
+      //   note: data.note?.trim() || "",
+      //   createdAt: Date.now(),
+      // });
+      successModalController.open();
+    } catch (error) {
+      Alert.alert("Error", "홈으로 이동합니다."); // TODO :: router연결
+    }
   });
 
   return {
@@ -44,6 +51,7 @@ const useAddMood = () => {
     submit,
     isSubmitting: isSubmitting,
     errors,
+    successModalController,
   };
 };
 

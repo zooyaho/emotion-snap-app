@@ -4,7 +4,7 @@ import { AppButton } from "./AppButton";
 import { cn } from "@utils/cn";
 import { ModalControllerType } from "@hooks/useModal";
 
-type AppModalPropsType = {
+export type AppModalPropsType = {
   controller: ModalControllerType;
   title?: string;
   onClose?: () => void;
@@ -34,7 +34,7 @@ export function AppModal({
 }: AppModalPropsType) {
   const { mounted, opacity, scale, close } = controller;
 
-  const handleBackdrop = isDismissOnBackdrop ? close : undefined;
+  const handleBackdrop = isDismissOnBackdrop ? (onClose ?? close) : undefined;
   const handleRequestClose = onClose ?? close;
 
   return (
@@ -55,21 +55,20 @@ export function AppModal({
         >
           {/* HEADER */}
           {title && (
-            <View className="mb-5">
-              <Text className="text-md text-center color-neutral-600">
-                {title}
-              </Text>
-            </View>
+            <Text className="text-md text-center color-neutral-600">
+              {title}
+            </Text>
           )}
 
           {/* CONTENT */}
+          {/* {children && <View className="flex-1">{children}</View>} */}
           {children}
 
           {/* FOOTER */}
           {(!!subButton || !!mainButton) && (
             <View
               className={cn(
-                "flex-row gap-3 w-full"
+                "flex-1 items-end flex-row gap-3 w-full"
                 // "absolute bottom-6 left-6 right-6"
               )}
             >
