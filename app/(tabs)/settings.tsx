@@ -1,12 +1,16 @@
 // app/(tabs)/settings.tsx
 import { AppButton } from "@components/common/AppButton";
 import { AppInput } from "@components/common/AppInput";
+import { AppModal } from "@components/common/AppModal";
 import { AppTextarea } from "@components/common/AppTextarea";
 import { BaseField } from "@components/common/BaseField";
 import ThemeToggle from "@components/ThemeToggle";
+import useModal from "@hooks/useModal";
+import { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 
 export default function Settings() {
+  const modal = useModal();
   return (
     <ScrollView className="w-[80%] flex-1 gap-4 ml-5 px-3">
       <Text className="text-[--color-primary-500]">설정</Text>
@@ -41,13 +45,30 @@ export default function Settings() {
         iconName="chevron-forward"
       />
       <AppButton
-        title="Button"
+        title="Modal Show"
         variant="secondary"
         iconName="chevron-forward"
         iconPosition="left"
+        onPress={() => modal.open()}
       />
       {/* xs */}
       <AppButton title="Button" variant="outline" size="xs" disabled />
+
+      <AppModal
+        controller={modal}
+        isDismissOnBackdrop
+        subButton={{ label: "취소", onPress: modal.close }}
+        mainButton={{
+          label: "삭제",
+          onPress: () => {
+            modal.close();
+          },
+        }}
+      >
+        <View className="flex-center">
+          <Text className="text-md text-neutral-600">기록을 삭제할까요?</Text>
+        </View>
+      </AppModal>
     </ScrollView>
   );
 }

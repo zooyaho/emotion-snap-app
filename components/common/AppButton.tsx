@@ -87,7 +87,7 @@ export function AppButton({
       disabled={disabled}
       onPress={onPress}
       className={cn(
-        "group flex-row items-center justify-center",
+        "flex-1 group flex-row items-center justify-center",
         sizeCls.container,
         variantContainerCls,
         "disabled:opacity-80"
