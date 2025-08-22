@@ -5,6 +5,9 @@ import {
   moodFormSchema,
   type MoodFormValuesType,
 } from "../schemas/mood.schema";
+import { v4 as uuid } from "uuid";
+import { addMoodEntry } from "../services/moodStorage";
+import { router } from "expo-router";
 
 const useAddMood = () => {
   const {
@@ -23,13 +26,13 @@ const useAddMood = () => {
 
   const submit = handleSubmit(async (data) => {
     console.log("Submit Data :: ", data);
-    // await addMoodEntry({
-    //   id: uuid(),
-    //   mood: data.mood as MoodIdType,
-    //   note: data.note?.trim() || undefined,
-    //   createdAt: Date.now(),
-    // });
-    // router.back();
+    await addMoodEntry({
+      id: uuid(),
+      mood: data.mood as MoodIdType,
+      note: data.note?.trim() || "",
+      createdAt: Date.now(),
+    });
+    router.back();
   });
 
   return {
