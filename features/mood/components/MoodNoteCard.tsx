@@ -16,11 +16,12 @@ import { router } from "expo-router";
 import { HREF } from "@constants/routes";
 import { AppModal } from "@components/common/AppModal";
 import useModal from "@hooks/useModal";
+import { format } from "date-fns";
 
 type MoodNoteCardPropsType = {
   id: string;
   moodId: MoodIdType;
-  createdDate: string;
+  createdDate: number | Date;
   content: string;
   onDeletePress?: (id: string) => Promise<void>;
   containerClassName?: string;
@@ -75,7 +76,7 @@ export default function MoodNoteCard({
     <>
       <View
         className={cn(
-          "rounded-2xl bg-background p-4 gap-2 h-fit",
+          "rounded-2xl bg-background p-4 gap-2 h-fit min-h-[160px]",
           theme === "light" ? "elev-center-low" : "elev-center-low-dark",
           containerClassName
         )}
@@ -93,7 +94,7 @@ export default function MoodNoteCard({
                 {moodId.charAt(0).toUpperCase() + moodId.slice(1)}
               </Text>
               <Text className={cn("text-xs text-neutral-300")}>
-                {createdDate}
+                {format(createdDate, "yyyy.MM.dd HH:mm")}
               </Text>
             </View>
           </View>
@@ -128,7 +129,7 @@ export default function MoodNoteCard({
           </View>
         </View>
         {/* Body */}
-        <View className="gap-2">
+        <View className="gap-2 px-2 mt-2">
           <Text
             className="text-sm text-neutral-600"
             onTextLayout={onContentTextLayout}
