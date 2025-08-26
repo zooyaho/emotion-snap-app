@@ -32,10 +32,12 @@ export function AppModal({
   mainButton,
   subButton,
 }: AppModalPropsType) {
-  const { mounted, opacity, scale, close } = controller;
+  const { mounted, opacity, scale, closeAsync } = controller;
 
-  const handleBackdrop = isDismissOnBackdrop ? (onClose ?? close) : undefined;
-  const handleRequestClose = onClose ?? close;
+  const handleBackdrop = isDismissOnBackdrop
+    ? (onClose ?? closeAsync)
+    : undefined;
+  const handleRequestClose = onClose ?? closeAsync;
 
   return (
     <Modal

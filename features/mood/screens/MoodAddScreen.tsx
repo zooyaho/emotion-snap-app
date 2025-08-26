@@ -5,6 +5,7 @@ import { MoodIdType } from "../types/mood.type";
 import MoodNoteCard from "../components/MoodNoteCard";
 import useAddMood from "../hooks/useAddMood";
 import MoodActionCompleteModal from "../components/MoodActionCompleteModal";
+import { router } from "expo-router";
 
 export function MoodAddScreen() {
   const {
@@ -26,6 +27,11 @@ export function MoodAddScreen() {
   const handleNoteChange = (text: string) => {
     // console.log("text", text);
     setNote(text);
+  };
+
+  const handleConfirm = async () => {
+    await successModalController.closeAsync();
+    router.back();
   };
 
   return (
@@ -61,10 +67,7 @@ export function MoodAddScreen() {
           controller={successModalController}
           moodId={mood}
           desc="기록 완료!"
-          handleConfirmPress={() => {
-            successModalController.close();
-            // router.back();
-          }}
+          handleConfirmPress={handleConfirm}
         />
       )}
     </>

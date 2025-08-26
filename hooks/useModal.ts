@@ -4,8 +4,8 @@ import { Animated, Easing } from "react-native";
 export type ModalControllerType = {
   isOpen: boolean;
   mounted: boolean;
-  open: () => void; // 모달 열기 함수
-  close: () => void;
+  open: () => void;
+  closeAsync: () => Promise<void>;
   toggle: () => void;
   opacity: Animated.Value; // 배경 및 컨테이너에 적용할 불투명도 값
   scale: Animated.Value; // 모달 컨테이너 스케일 값 (팝인/팝아웃 애니메이션)
@@ -28,11 +28,22 @@ export default function useModal({
   bounciness = 6,
 }: UseModalOptionsType = {}): ModalControllerType {
   const [isOpen, setIsOpen] = useState(initialOpen);
-  // 닫힐 때 애니메이션이 끝난 후에 unmount 되도록 제어하기 위해 따로 둠
-  const [mounted, setMounted] = useState(initialOpen);
-
+  const [mounted, setMounted] = useState(initialOpen); // 닫힐 때 애니메이션이 끝난 후에 unmount 되도록 제어하기 위해 따로 둠
   const opacity = useRef(new Animated.Value(0)).current; // 초기값: 투명
   const scale = useRef(new Animated.Value(0.95)).current; // 초기값: 살짝 축소된 상태
+  const closeResolversRef = useRef<Array<() => void>>([]); // 닫힘 완료를 기다리는 resolve 콜백들을 저장
+
+  const closeAsync = useCallback(() => {
+    // 이미 언마운트 상태라면 즉시 resolve
+    if (!mounted && !isOpen) return Promise.resolve();
+
+    return new Promise<void>((resolve) => {
+      closeResolversRef.current.push(resolve);
+      setIsOpen(false);
+    });
+  }, [mounted, isOpen]);
+  const open = useCallback(() => setIsOpen(true), []);
+  const toggle = useCallback(() => setIsOpen((v) => !v), []);
 
   useEffect(() => {
     let cancelled = false; // cleanup 중간에 setState 방지 플래그
@@ -74,6 +85,15 @@ export default function useModal({
       ]).start(() => {
         // 애니메이션이 끝난 뒤 실제로 unmount
         if (!cancelled) setMounted(false);
+
+        // 닫힘 애니메이션이 끝난 뒤 대기중인 resolve 모두 호출
+        const resolvers = closeResolversRef.current.splice(
+          0,
+          closeResolversRef.current.length
+        );
+        requestAnimationFrame(() => {
+          resolvers.forEach((r) => r());
+        });
       });
     }
 
@@ -91,9 +111,5 @@ export default function useModal({
     bounciness,
   ]);
 
-  const open = useCallback(() => setIsOpen(true), []);
-  const close = useCallback(() => setIsOpen(false), []);
-  const toggle = useCallback(() => setIsOpen((v) => !v), []);
-
-  return { isOpen, mounted, open, close, toggle, opacity, scale };
+  return { isOpen, mounted, open, closeAsync, toggle, opacity, scale };
 }

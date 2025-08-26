@@ -8,7 +8,7 @@ type MoodActionCompleteModalPropsType = {
   controller: ModalControllerType;
   moodId: MoodIdType;
   desc: string;
-  handleConfirmPress: () => void;
+  handleConfirmPress: () => Promise<void>;
 } & AppModalPropsType;
 
 export default function MoodActionCompleteModal({
