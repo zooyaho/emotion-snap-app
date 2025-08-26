@@ -19,6 +19,7 @@ export default function Settings() {
     <ScrollView className="flex-1 gap-4 p-8">
       <Text className="text-[--color-primary-500]">설정</Text>
       <MoodNoteCard
+        id=":test"
         moodId="happy"
         createdDate={format(today, "yyyy.MM.dd HH:mm")}
         content="오늘은 정말 즐겁고 행복한 하루였어요. 오랜만에 친구들과 만나 웃고 떠들며 좋은 시간을 보냈고, 내가 좋아하는 취미 활동에도 집중할 수 있어 마음이 풍요로웠습니다. 모든 일이 순조롭게 풀려서 스트레스 없이 여유로운 시간을 보낼 수 있었어요. 이런 순간들이 쌓여서 내 삶에 큰 힘이 되고 있다는 걸 느꼈습니다. 앞으로도 이런 기쁨과 행복감을 자주 느끼며, 매 순간 감사하는 마음으로 살아가고 싶습니다. 오늘의 좋은 기억을 오래도록 간직할 거예요."
