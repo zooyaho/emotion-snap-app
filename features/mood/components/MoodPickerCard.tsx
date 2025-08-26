@@ -4,6 +4,7 @@ import { MOOD_OPTIONS } from "../data/mood.data";
 import { MoodIdType } from "../types/mood.type";
 import MoodImage from "./MoodImage";
 import { getMoodHex } from "../utils/moodColors";
+import { useTheme } from "@providers/ThemeProvider";
 
 type MoodPickerCardPropsType = {
   value?: MoodIdType | null;
@@ -20,10 +21,12 @@ export default function MoodPickerCard({
   title = "감정을 골라보세요",
   className,
 }: MoodPickerCardPropsType) {
+  const { theme } = useTheme();
   return (
     <View
       className={cn(
-        "rounded-2xl bg-background p-4 elev-center-low gap-2 h-fit",
+        "rounded-2xl bg-background p-4  gap-2 h-fit",
+        theme === "light" ? "elev-center-low" : "elev-center-low-dark",
         className
       )}
     >

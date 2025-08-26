@@ -2,7 +2,7 @@ import BottomButton from "@components/common/BottomButton";
 import MoodPickerCard from "@features/mood/components/MoodPickerCard";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { MoodIdType } from "../types/mood.type";
-import MoodNoteCard from "../components/MoodNoteCard";
+import MoodFieldCard from "../components/MoodFieldCard";
 import useAddMood from "../hooks/useAddMood";
 import MoodActionCompleteModal from "../components/MoodActionCompleteModal";
 import { router } from "expo-router";
@@ -40,7 +40,7 @@ export function MoodAddScreen() {
         <ScrollView contentContainerClassName="pb-24 p-6">
           <View className="flex-1 gap-4">
             <MoodPickerCard value={mood} onChange={handleMoodPick} />
-            <MoodNoteCard value={note} onChangeText={handleNoteChange} />
+            <MoodFieldCard value={note} onChangeText={handleNoteChange} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
