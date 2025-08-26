@@ -11,6 +11,55 @@ import useModal from "@hooks/useModal";
 import { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { format } from "date-fns";
+import MoodVerticalBars from "@features/mood/components/MoodVerticalBars";
+
+import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 사용
+import { MoodEntryType } from "@features/mood/services/moodStorage";
+
+export const dummyMoods: MoodEntryType[] = [
+  {
+    id: "123a",
+    moodId: "angry",
+    note: "회의 때문에 너무 짜증난 하루",
+    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 1, // 하루 전
+  },
+  {
+    id: "123b",
+    moodId: "happy",
+    note: "오랜만에 친구를 만나서 즐거웠음",
+    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 2,
+  },
+  {
+    id: "123c",
+    moodId: "sad",
+    note: "비가 와서 조금 우울한 기분",
+    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 3,
+  },
+  {
+    id: "123d",
+    moodId: "upset",
+    note: "출근길에 날씨가 좋아서 기분 좋았음",
+    createdAt: Date.now() - 1000 * 60 * 60 * 5,
+  },
+  {
+    id: "123e",
+    moodId: "upset",
+    note: "프로젝트 발표가 대성공! 인생 최고의 하루",
+    createdAt: Date.now() - 1000 * 60 * 30,
+  },
+  {
+    id: "123g",
+    moodId: "upset",
+    note: "약속이 취소되어 속상했음",
+    createdAt: Date.now() - 1000 * 60 * 60 * 10,
+  },
+  {
+    id: "123h",
+    moodId: "upset",
+    note: "맛있는 저녁을 먹고 산책함",
+    createdAt: Date.now(),
+  },
+];
 
 export default function Settings() {
   const modal = useModal();
@@ -18,13 +67,19 @@ export default function Settings() {
   return (
     <ScrollView className="flex-1 gap-4 p-8">
       <Text className="text-[--color-primary-500]">설정</Text>
+      <MoodVerticalBars
+        moodEntries={dummyMoods}
+        //   height?: number; // 막대 트랙 높이
+        //   barWidth?: number; // 막대 너비
+        //   minFill?: number; // 값이 0이어도 최소 표시 높이
+        // containerBg?: string; // 카드 배경
+      />
       <MoodNoteCard
         id=":test"
         moodId="happy"
         createdDate={format(today, "yyyy.MM.dd HH:mm")}
         content="오늘은 정말 즐겁고 행복한 하루였어요. 오랜만에 친구들과 만나 웃고 떠들며 좋은 시간을 보냈고, 내가 좋아하는 취미 활동에도 집중할 수 있어 마음이 풍요로웠습니다. 모든 일이 순조롭게 풀려서 스트레스 없이 여유로운 시간을 보낼 수 있었어요. 이런 순간들이 쌓여서 내 삶에 큰 힘이 되고 있다는 걸 느꼈습니다. 앞으로도 이런 기쁨과 행복감을 자주 느끼며, 매 순간 감사하는 마음으로 살아가고 싶습니다. 오늘의 좋은 기억을 오래도록 간직할 거예요."
       />
-
       {/* <View className="w-40 h-20 rounded-2xl bg-white elev-down-low" />
       <View className="w-40 h-20 rounded-2xl bg-white elev-down-medium" /> */}
       <ThemeToggle />
@@ -41,7 +96,6 @@ export default function Settings() {
       <AppTextarea placeholder="Typing…" rows={5} maxLength={200} />
       <AppInput variant="password" />
       <AppInput variant="search" />
-
       {/* md */}
       <AppButton
         title="Button"
@@ -68,7 +122,6 @@ export default function Settings() {
       {/* xs */}
       <AppButton title="Button" variant="outline" size="xs" disabled />
       <LoadingIndicator />
-
       <AppModal
         title="dkssud"
         controller={modal}

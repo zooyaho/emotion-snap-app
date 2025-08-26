@@ -6,7 +6,7 @@ const KEY = "mood:entries";
 
 export type MoodEntryType = {
   id: string; // uuid
-  mood: MoodIdType;
+  moodId: MoodIdType;
   note: string;
   createdAt: number;
 };
