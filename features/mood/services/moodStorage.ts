@@ -1,6 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { MoodIdType } from "@features/mood/types/mood.type";
-import { ZodUUID } from "zod";
+import {
+  startEndOfDay,
+  startEndOfMonth,
+  startEndOfYear,
+  toMs,
+} from "@utils/dateRange";
 
 const KEY = "mood:entries";
 
@@ -11,7 +16,16 @@ export type MoodEntryType = {
   createdAt: number;
 };
 
-export async function getMoodEntries(): Promise<MoodEntryType[]> {
+/** 조회 옵션 */
+type MoodQueryType =
+  | { range: "all" }
+  | { range: "day"; date?: Date | number }
+  | { range: "month"; date?: Date | number }
+  | { range: "year"; date?: Date | number }
+  | { range: "custom"; from: Date | number; to: Date | number };
+
+/** 전체 Mood Note List 로드 */
+async function getMoodAllEntry(): Promise<MoodEntryType[]> {
   const raw = await AsyncStorage.getItem(KEY);
   if (!raw) return [];
   try {
@@ -20,6 +34,51 @@ export async function getMoodEntries(): Promise<MoodEntryType[]> {
     return [];
   }
 }
+
+/** 범위 조회 지원 */
+export const getMoodEntries = async (
+  query: MoodQueryType = { range: "all" }
+): Promise<MoodEntryType[]> => {
+  const all = await getMoodAllEntry();
+  switch (query.range) {
+    case "all":
+      return all;
+
+    case "day": {
+      const { start, end } = startEndOfDay(
+        query.date ? new Date(toMs(query.date)) : new Date()
+      );
+      return all.filter((e) => e.createdAt >= start && e.createdAt <= end);
+    }
+
+    case "month": {
+      const { start, end } = startEndOfMonth(
+        query.date ? new Date(toMs(query.date)) : new Date()
+      );
+      return all.filter((e) => e.createdAt >= start && e.createdAt <= end);
+    }
+
+    case "year": {
+      const { start, end } = startEndOfYear(
+        query.date ? new Date(toMs(query.date)) : new Date()
+      );
+      return all.filter((e) => e.createdAt >= start && e.createdAt <= end);
+    }
+
+    case "custom": {
+      const start = toMs(query.from);
+      const end = toMs(query.to);
+      return all.filter((e) => e.createdAt >= start && e.createdAt <= end);
+    }
+  }
+};
+
+/** 편의 함수들 */
+export const getTodayMoodEntries = () => getMoodEntries({ range: "day" });
+export const getMonthMoodEntries = (date?: Date | number) =>
+  getMoodEntries({ range: "month", date });
+export const getYearMoodEntries = (date?: Date | number) =>
+  getMoodEntries({ range: "year", date });
 
 export async function addMoodEntry(entry: MoodEntryType): Promise<void> {
   const list = await getMoodEntries();
