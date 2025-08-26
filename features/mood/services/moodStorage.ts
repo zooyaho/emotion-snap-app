@@ -1,3 +1,5 @@
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { MoodIdType } from "@features/mood/types/mood.type";
 import {
@@ -80,9 +82,13 @@ export const getMonthMoodEntries = (date?: Date | number) =>
 export const getYearMoodEntries = (date?: Date | number) =>
   getMoodEntries({ range: "year", date });
 
-export async function addMoodEntry(entry: MoodEntryType): Promise<void> {
+export async function addMoodEntry(
+  entry: Omit<MoodEntryType, "id">
+): Promise<void> {
   const list = await getMoodEntries();
-  list.unshift(entry); // 최근 순
+  const addData = { ...entry } as MoodEntryType;
+  addData.id = uuidv4();
+  list.unshift(addData); // 최근 순
   await AsyncStorage.setItem(KEY, JSON.stringify(list));
 }
 
