@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { MoodIdType } from "../types/mood.type";
 import MoodFieldCard from "../components/MoodFieldCard";
 import useAddMood from "../hooks/useAddMood";
-import MoodActionCompleteModal from "../components/MoodActionCompleteModal";
+import MoodAddCompleteModal from "../components/MoodAddCompleteModal";
 import { router } from "expo-router";
 
 export function MoodAddScreen() {
@@ -63,7 +63,7 @@ export function MoodAddScreen() {
 
       {/* 기록 성공 시 활성화 모달 */}
       {mood && (
-        <MoodActionCompleteModal
+        <MoodAddCompleteModal
           controller={successModalController}
           moodId={mood}
           desc="기록 완료!"

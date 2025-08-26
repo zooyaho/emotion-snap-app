@@ -4,20 +4,20 @@ import { MoodIdType } from "../types/mood.type";
 import { View, Image, Text } from "react-native";
 import MoodImage from "./MoodImage";
 
-type MoodActionCompleteModalPropsType = {
+type MoodAddCompleteModalPropsType = {
   controller: ModalControllerType;
   moodId: MoodIdType;
   desc: string;
   handleConfirmPress: () => Promise<void>;
 } & AppModalPropsType;
 
-export default function MoodActionCompleteModal({
+export default function MoodAddCompleteModal({
   controller,
   moodId,
   desc,
   handleConfirmPress,
   ...rest
-}: MoodActionCompleteModalPropsType) {
+}: MoodAddCompleteModalPropsType) {
   return (
     <AppModal
       controller={controller}

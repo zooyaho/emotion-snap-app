@@ -80,7 +80,7 @@ export default function MoodNoteCard({
           containerClassName
         )}
       >
-        {/* HEADER */}
+        {/* Header */}
         <View className="flex-row justify-between items-center">
           <View className="flex-row justify-between items-center gap-2">
             <MoodImage name={moodId} width={46} height={46} />
@@ -97,7 +97,7 @@ export default function MoodNoteCard({
               </Text>
             </View>
           </View>
-          {/* active btns */}
+          {/* Active Btns */}
           <View className="flex-row">
             {/* 수정 버튼 */}
             <Pressable
@@ -127,7 +127,7 @@ export default function MoodNoteCard({
             </Pressable>
           </View>
         </View>
-        {/* BODY */}
+        {/* Body */}
         <View className="gap-2">
           <Text
             className="text-sm text-neutral-600"
