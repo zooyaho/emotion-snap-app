@@ -11,6 +11,7 @@ import {
 
 const KEY = "mood:entries";
 
+/** 감정 기록 타입 정의 */
 export type MoodEntryType = {
   id: string; // uuid
   moodId: MoodIdType;
@@ -18,7 +19,7 @@ export type MoodEntryType = {
   createdAt: number;
 };
 
-/** 조회 옵션 */
+/** 조회 옵션 타입 */
 type MoodQueryType =
   | { range: "all" }
   | { range: "day"; date?: Date | number }
@@ -26,7 +27,10 @@ type MoodQueryType =
   | { range: "year"; date?: Date | number }
   | { range: "custom"; from: Date | number; to: Date | number };
 
-/** 전체 Mood Note List 로드 */
+/**
+ * 전체 감정 기록 리스트 로드
+ * @returns 모든 감정 기록 배열
+ */
 async function getMoodAllEntry(): Promise<MoodEntryType[]> {
   const raw = await AsyncStorage.getItem(KEY);
   if (!raw) return [];
@@ -37,7 +41,11 @@ async function getMoodAllEntry(): Promise<MoodEntryType[]> {
   }
 }
 
-/** 범위 조회 지원 */
+/**
+ * 범위에 맞는 감정 기록 조회
+ * @param query 조회 범위 (전체, 일간, 월간, 연간, 커스텀)
+ * @returns 범위에 해당하는 감정 기록 배열
+ */
 export const getMoodEntries = async (
   query: MoodQueryType = { range: "all" }
 ): Promise<MoodEntryType[]> => {
@@ -75,13 +83,44 @@ export const getMoodEntries = async (
   }
 };
 
-/** 편의 함수들 */
+/**
+ * 오늘의 감정 기록 조회
+ * @returns 오늘 작성된 감정 기록 배열
+ */
 export const getTodayMoodEntries = () => getMoodEntries({ range: "day" });
+
+/**
+ * 특정 월의 감정 기록 조회
+ * @param date 기준 날짜 (없으면 현재 월)
+ * @returns 해당 월의 감정 기록 배열
+ */
 export const getMonthMoodEntries = (date?: Date | number) =>
   getMoodEntries({ range: "month", date });
+
+/**
+ * 특정 년도의 감정 기록 조회
+ * @param date 기준 날짜 (없으면 현재 연도)
+ * @returns 해당 연도의 감정 기록 배열
+ */
 export const getYearMoodEntries = (date?: Date | number) =>
   getMoodEntries({ range: "year", date });
 
+/**
+ * ID로 특정 감정 기록 조회
+ * @param id 찾고 싶은 기록의 ID
+ * @returns 해당 감정 기록 (없으면 undefined)
+ */
+export async function getMoodEntryById(
+  id: string
+): Promise<MoodEntryType | undefined> {
+  const list = await getMoodEntries();
+  return list.find((e) => e.id === id);
+}
+
+/**
+ * 새로운 감정 기록 추가
+ * @param entry 감정 기록 (id 제외)
+ */
 export async function addMoodEntry(
   entry: Omit<MoodEntryType, "id">
 ): Promise<void> {
@@ -92,21 +131,35 @@ export async function addMoodEntry(
   await AsyncStorage.setItem(KEY, JSON.stringify(list));
 }
 
+/**
+ * 감정 기록 수정
+ * @param id 수정할 기록의 ID
+ * @param patch 수정할 필드 (부분 업데이트 가능)
+ */
 export async function updateMoodEntry(
   id: string,
-  patch: Partial<MoodEntryType>
+  patchValues: Omit<MoodEntryType, "id" | "createdAt">
 ) {
-  const list = await getMoodEntries();
-  const next = list.map((e) => (e.id === id ? { ...e, ...patch } : e));
-  await AsyncStorage.setItem(KEY, JSON.stringify(next));
+  const prevList = await getMoodEntries();
+  const updatedList = prevList.map((e) =>
+    e.id === id ? { ...e, ...patchValues } : e
+  );
+  await AsyncStorage.setItem(KEY, JSON.stringify(updatedList));
 }
 
+/**
+ * 감정 기록 삭제
+ * @param id 삭제할 기록의 ID
+ */
 export async function removeMoodEntry(id: string) {
   const list = await getMoodEntries();
   const next = list.filter((e) => e.id !== id);
   await AsyncStorage.setItem(KEY, JSON.stringify(next));
 }
 
+/**
+ * 모든 감정 기록 삭제
+ */
 export async function clearAllMoodEntries() {
   await AsyncStorage.removeItem(KEY);
 }

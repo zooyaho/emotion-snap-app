@@ -9,15 +9,15 @@ const moodEnum = z.enum(
 );
 
 export const moodFormSchema = z.object({
-  mood: z
+  moodValue: z
     .union([moodEnum, z.literal("")])
     .refine((v): v is MoodIdType => v !== "", {
       message: "감정을 선택해주세요",
     }),
-  note: z.string().trim().min(1, "").max(200),
+  noteValue: z.string().trim().min(1, "").max(200),
 });
 
 export type MoodFormValuesType = {
-  mood: MoodIdType | ""; // "" = 기본(미선택)
-  note: string;
+  moodValue: MoodIdType | ""; // "" = 기본(미선택)
+  noteValue: string;
 };

@@ -10,7 +10,6 @@ export const HREF = {
   },
   mood: {
     add: "/mood/add" as Href,
-    detail: (id: string | number): Href => `/mood/${id}` as Href,
     edit: (id: string | number): Href => `/mood/edit/${id}` as Href,
   },
 } as const;

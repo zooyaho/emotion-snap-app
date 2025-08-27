@@ -3,11 +3,15 @@ import MoodPickerCard from "@features/mood/components/MoodPickerCard";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { MoodIdType } from "../types/mood.type";
 import MoodFieldCard from "../components/MoodFieldCard";
-import useAddMood from "../hooks/useAddMood";
+import useEditMood from "../hooks/useEditMood";
 import MoodAddCompleteModal from "../components/MoodAddCompleteModal";
 import { router } from "expo-router";
 
-export function MoodAddScreen() {
+type MoodEditScreenPropsType = {
+  moodId?: string;
+};
+
+export default function MoodEditScreen({ moodId }: MoodEditScreenPropsType) {
   const {
     successModalController,
     moodValue,
@@ -17,7 +21,7 @@ export function MoodAddScreen() {
     isValid,
     submit,
     isSubmitting,
-  } = useAddMood();
+  } = useEditMood(moodId);
 
   const handleMoodPick = (pickedMoodId: MoodIdType) => {
     // console.log("pickedMoodId", pickedMoodId);
@@ -46,18 +50,18 @@ export function MoodAddScreen() {
       </KeyboardAvoidingView>
 
       <BottomButton
-        title="기록"
+        title="수정"
         onPress={submit}
         disabled={!isValid}
         isLoading={isSubmitting}
       />
 
-      {/* 기록 성공 시 활성화 모달 */}
+      {/* 수정 성공 시 활성화 모달 */}
       {moodValue && (
         <MoodAddCompleteModal
           controller={successModalController}
           moodId={moodValue}
-          desc="기록 완료!"
+          desc="수정 완료!"
           handleConfirmPress={handleConfirm}
         />
       )}

@@ -21,12 +21,13 @@ export default function MoodLayout() {
         }}
       />
       <Stack.Screen
-        name={ROUTE_NAME.MOOD.DETAIL}
-        options={{ title: "감정 노트" }}
-      />
-      <Stack.Screen
         name={ROUTE_NAME.MOOD.EDIT}
-        options={{ title: "감정 노트 수정" }}
+        options={{
+          title: "감정 노트 수정",
+          header: () => (
+            <AppHeader centerType="title" title="감정 수정" leftType="back" />
+          ),
+        }}
       />
     </Stack>
   );

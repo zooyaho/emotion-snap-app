@@ -1,16 +1,7 @@
-import { HREF } from "@constants/routes";
-import { useLocalSearchParams, router } from "expo-router";
-import { View, Text, Button } from "react-native";
+import MoodEditScreen from "@features/mood/screens/MoodEditScreen";
+import { useLocalSearchParams } from "expo-router";
 
-export default function EditMood() {
+export default function MoodEditRoute() {
   const { moodId } = useLocalSearchParams<{ moodId: string }>();
-  return (
-    <View className="flex-1 p-4">
-      <Text className="text-lg font-semibold">노트 수정 #{moodId}</Text>
-      <Button
-        title="저장"
-        onPress={() => router.replace(HREF.mood.detail(moodId))}
-      />
-    </View>
-  );
+  return <MoodEditScreen moodId={moodId} />;
 }
