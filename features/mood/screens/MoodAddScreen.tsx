@@ -1,11 +1,11 @@
 import BottomButton from "@components/common/BottomButton";
 import MoodPickerCard from "@features/mood/components/MoodPickerCard";
-import { KeyboardAvoidingView, ScrollView, View } from "react-native";
-import { MoodIdType } from "../types/mood.type";
-import MoodFieldCard from "../components/MoodFieldCard";
-import useAddMood from "../hooks/useAddMood";
-import MoodAddCompleteModal from "../components/MoodAddCompleteModal";
 import { router } from "expo-router";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import MoodAddCompleteModal from "../components/MoodAddCompleteModal";
+import MoodFieldCard from "../components/MoodFieldCard";
+import useMood from "../hooks/useMood";
+import { MoodIdType } from "../types/mood.type";
 
 export function MoodAddScreen() {
   const {
@@ -17,7 +17,7 @@ export function MoodAddScreen() {
     isValid,
     submit,
     isSubmitting,
-  } = useAddMood();
+  } = useMood("add");
 
   const handleMoodPick = (pickedMoodId: MoodIdType) => {
     // console.log("pickedMoodId", pickedMoodId);
