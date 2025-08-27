@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import MoodImage from "../../mood/components/MoodImage";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const [todayMoodEntries, setTodayNoteEntries] = useState<MoodEntryType[]>([]);
@@ -34,9 +35,12 @@ export default function HomeScreen() {
     return format(today, "M월 d일");
   }, []);
 
-  useEffect(() => {
-    loadToday();
-  }, [loadToday]);
+  useFocusEffect(
+    // 화면이 다시 포커스될 때마다 재조회
+    useCallback(() => {
+      loadToday();
+    }, [loadToday])
+  );
 
   return (
     <ScrollView
