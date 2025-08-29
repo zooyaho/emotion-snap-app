@@ -2,6 +2,8 @@ import {
   eachDayOfInterval,
   endOfMonth,
   format,
+  getMonth,
+  getYear,
   isAfter,
   startOfDay,
   startOfMonth,
@@ -86,7 +88,11 @@ export function getMonthsOfYear(
  * thisYearMonth()
  * // { year: 2025, month: 8 }
  */
-export function getThisYearMonth(): YearMonthType {
+export function getTodayYearMonth(): YearMonthType {
   const now = new Date();
-  return { year: now.getFullYear(), month: now.getMonth() + 1 };
+  return { year: getYear(now), month: getMonth(now) + 1 };
+}
+
+export function getYearMonth(date: Date): YearMonthType {
+  return { year: getYear(date), month: getMonth(date) + 1 };
 }

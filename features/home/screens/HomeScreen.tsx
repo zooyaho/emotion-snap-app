@@ -14,7 +14,7 @@ import MoodImage from "../../mood/components/MoodImage";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen() {
-  const [todayMoodEntries, setTodayNoteEntries] = useState<MoodEntryType[]>([]);
+  const [todayNoteEntries, setTodayNoteEntries] = useState<MoodEntryType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadToday = useCallback(async () => {
@@ -53,7 +53,7 @@ export default function HomeScreen() {
       {/* 감정 분포 */}
       <View className="mt-4 gap-3">
         <Text className="text-base text-neutral-600">오늘의 감정 분포</Text>
-        <MoodVerticalBars moodEntries={todayMoodEntries} />
+        <MoodVerticalBars moodEntries={todayNoteEntries} />
       </View>
 
       {/* 기록 리스트 */}
@@ -62,7 +62,7 @@ export default function HomeScreen() {
           <View className="mt-16 items-center justify-center">
             <LoadingIndicator />
           </View>
-        ) : todayMoodEntries.length === 0 ? (
+        ) : todayNoteEntries.length === 0 ? (
           <View className="flex-row mt-16 items-center justify-center">
             <Text className="text-md text-center text-neutral-600">
               순간의 감정을 기록하세요
@@ -70,13 +70,13 @@ export default function HomeScreen() {
             <MoodImage name="spectacular" height={32} width={32} />
           </View>
         ) : (
-          todayMoodEntries.map((entry) => (
+          todayNoteEntries.map((note) => (
             <MoodNoteCard
-              key={entry.id}
-              id={entry.id}
-              moodId={entry.moodId}
-              createdDate={entry.createdAt}
-              content={entry.note}
+              key={note.id}
+              id={note.id}
+              moodId={note.moodId}
+              createdDate={note.createdAt}
+              content={note.note}
               onDeletePress={handleDelete}
             />
           ))
