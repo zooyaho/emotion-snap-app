@@ -44,7 +44,7 @@ export default function TabsLayout() {
         },
 
         tabBarBackground: () => (
-          <View className="flex-1 bg-neutral-50 border-t-[1px] border-t-neutral-100" />
+          <View className="flex-1 bg-background border-t-[1px] border-t-neutral-100" />
         ),
       }}
     >

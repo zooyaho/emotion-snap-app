@@ -68,6 +68,9 @@ export default function HistoryScreen() {
     setIsLoading(false);
   }, []);
 
+  /**
+   * TODO :: 뒤로 돌아올때마다 리스트 깜박임 현상 수정 >> tanstack-query로 수정 예정
+   */
   // 탭으로 돌아올 때마다 '오늘'로 초기화 + 오늘 데이터 즉시 로드
   useFocusEffect(
     useCallback(() => {
