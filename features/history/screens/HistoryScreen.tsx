@@ -1,7 +1,9 @@
 import AppScrollableBottomSheet from "@components/common/AppScrollableBottomSheet";
+import DateChipRow from "@components/common/DateChipRow";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import {
   YearMonthType,
+  getMonthDays,
   getMonthsOfYear,
   getThisYearMonth,
   ymLabel,
@@ -13,6 +15,13 @@ export default function HistoryScreen() {
   // 기본값: 오늘
   const thisYearMonth = getThisYearMonth();
   const [ym, setYm] = useState<YearMonthType>(thisYearMonth);
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+  const days = useMemo(
+    () => getMonthDays(ym.year, ym.month),
+    [ym.year, ym.month]
+  );
 
   // 바텀시트 ref
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -41,6 +50,13 @@ export default function HistoryScreen() {
       <Pressable onPress={openMonth} className="self-start">
         <Text className="text-2xl font-extrabold">{ymLabel(ym)} ▾</Text>
       </Pressable>
+      <View className="my-2">
+        <DateChipRow
+          days={days}
+          selectedDate={selectedDate}
+          onSelect={(d) => setSelectedDate(d.date)}
+        />
+      </View>
       {/* ▽ MONTH SHEET */}
       <AppScrollableBottomSheet
         ref={bottomSheetRef}

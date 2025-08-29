@@ -31,7 +31,8 @@ export const tokens: Record<"light" | "dark", Record<string, string>> = {
     "--color-danger-600": "180 19 19", //  #B41313
 
     // background
-    "--color-background": "249 249 251", // #FAF9F6
+    "--color-background": "255 255 255", // #fff
+    // "--color-background": "249 249 251", // #FAF9F6
     // technical
     "--color-technical": "83 84 116", // #535474
   },
