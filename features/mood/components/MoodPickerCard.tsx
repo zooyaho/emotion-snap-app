@@ -50,10 +50,7 @@ export default function MoodPickerCard({
               )}
             >
               <Text
-                className={cn(
-                  "text-xs font-semibold",
-                  selected ? "text-primary-600" : "text-neutral-600"
-                )}
+                className={cn("text-xs font-semibold")}
                 style={{ color: getMoodHex(id, "text") }}
                 numberOfLines={1}
               >
