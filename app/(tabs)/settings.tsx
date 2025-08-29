@@ -16,6 +16,7 @@ import MoodVerticalBars from "@features/mood/components/MoodVerticalBars";
 import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 사용
 import { MoodEntryType } from "@features/mood/services/moodStorage";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import DateChip from "@components/common/DateChip";
 
 export const dummyMoods: MoodEntryType[] = [
   {
@@ -73,7 +74,12 @@ export default function Settings() {
     <>
       <ScrollView className="flex-1 gap-4 p-8">
         <Text className="text-[--color-primary-500]">설정</Text>
-        <AppButton
+        <View className="flex-row gap-2">
+          <DateChip type="default" weekday={"수"} day={1} />
+          <DateChip type="disabled" weekday={"목"} day={2} />
+          <DateChip type="selected" weekday={"금"} day={3} />
+        </View>
+        {/* <AppButton
           title="Open BottomSheet!"
           onPress={() => {
             // console.log("Open BottomSheet Click!!");
@@ -95,8 +101,7 @@ export default function Settings() {
               <Text>월 선택</Text>
             </View>
           </BottomSheetView>
-        </BottomSheetModal>
-
+        </BottomSheetModal> */}
         <MoodVerticalBars
           moodEntries={dummyMoods}
           //   height?: number; // 막대 트랙 높이
