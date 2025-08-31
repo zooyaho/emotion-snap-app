@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
+import DailyStatsScreen from "@features/stats/screens/DailyStatsScreen";
 
-export default function DailyStats() {
+export default function DailyStatsRoute() {
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text>일간 통계</Text>
-    </View>
+    <>
+      <DailyStatsScreen />
+    </>
   );
 }

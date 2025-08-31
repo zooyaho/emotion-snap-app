@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
+import MonthlyStatsScreen from "@features/stats/screens/MonthlyStatsScreen";
 
-export default function MonthlyStats() {
+export default function MonthlyStatsRoute() {
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text>월간 통계</Text>
-    </View>
+    <>
+      <MonthlyStatsScreen />
+    </>
   );
 }

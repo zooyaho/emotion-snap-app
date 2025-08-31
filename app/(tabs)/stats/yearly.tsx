@@ -1,9 +1,5 @@
-import { View, Text } from "react-native";
+import YearlyStatsScreen from "@features/stats/screens/YearlyStatsScreen";
 
-export default function YearlyStats() {
-  return (
-    <View className="flex-1 items-center justify-center">
-      <Text>연간 통계</Text>
-    </View>
-  );
+export default function YearlyStatsRoute() {
+  return <YearlyStatsScreen />;
 }
