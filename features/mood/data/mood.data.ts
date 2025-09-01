@@ -1,3 +1,5 @@
+import { MoodIdType } from "../types/mood.type";
+
 export const MOOD_OPTIONS = [
   { id: "angry", label: "angry" },
   { id: "upset", label: "upset" },
@@ -15,3 +17,13 @@ export const moodColors = {
   happy: { DEFAULT: "#DFEBFF", text: "#5C6CA1" },
   spectacular: { DEFAULT: "#FFA7BC", text: "#66424B" },
 };
+
+// 낮을수록 부정, 높을수록 긍정
+export const MOOD_SCORE: Record<MoodIdType, number> = {
+  angry: -2,
+  upset: -1,
+  sad: -1,
+  good: 1,
+  happy: 2,
+  spectacular: 3,
+} as const;

@@ -32,7 +32,9 @@
     "react-hook-form": "^7.62.0",
     "react-native": "0.79.5",
     "react-native-css-interop": "^0.1.22",
+    "react-native-gesture-handler": "~2.24.0",
     "react-native-get-random-values": "^1.11.0",
+    "react-native-gifted-charts": "^1.4.64",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
@@ -41,8 +43,7 @@
     "react-native-worklets-core": "^1.6.2",
     "tailwind-merge": "^3.3.1",
     "uuid": "^11.1.0",
-    "zod": "^4.0.17",
-    "react-native-gesture-handler": "~2.24.0"
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
