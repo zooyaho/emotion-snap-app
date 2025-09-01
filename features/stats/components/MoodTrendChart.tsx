@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { View } from "react-native";
+import { useMemo, useState } from "react";
+import { LayoutChangeEvent, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 import { useTheme } from "@providers/ThemeProvider";
 import getColorByTwToken from "@utils/getColorByTwToken";
@@ -27,6 +27,11 @@ export default function MoodTrendChart({
   const axisColor = getColorByTwToken(theme, "neutral-300");
   const textColor = getColorByTwToken(theme, "neutral-600");
 
+  const [chartWidth, setChartWidth] = useState(0); // 차트 너비
+  const Y_LABEL_W = 28; // Y축 라벨 폭
+  const INITIAL = 16;
+  const END = 16;
+
   /** ───────────────────── X축 데이터 집계 ───────────────────── */
   const data = useMemo(() => {
     return mode === "day"
@@ -47,41 +52,59 @@ export default function MoodTrendChart({
     []
   );
 
+  const onLayoutContainer = (e: LayoutChangeEvent) => {
+    setChartWidth(e.nativeEvent.layout.width);
+  };
+
+  const points = Math.max(1, data.length - 1);
+  const innerW = Math.max(0, chartWidth - Y_LABEL_W - INITIAL - END);
+  const spacing = points > 0 ? innerW / points : innerW; // X축 라벨 간격
+
   return (
-    <View className="bg-background/20 rounded-xl pt-5 pb-2">
-      <LineChart
-        data={data}
-        /** 높이는 stepHeight로 맞춤(섹션 6개 × stepHeight) */
-        stepHeight={stepHeight}
-        isAnimated
-        // X축
-        xAxisLabelTextStyle={{ fontSize: 10, opacity: 0.8, color: textColor }}
-        xAxisType="solid"
-        xAxisColor={axisColor}
-        // Y축
-        maxValue={axis.maxValue}
-        stepValue={axis.stepValue}
-        noOfSections={axis.noOfSections}
-        noOfSectionsBelowXAxis={axis.noOfSectionsBelowXAxis}
-        yAxisLabelTexts={axis.yAxisLabelTexts}
-        yAxisTextStyle={{ fontSize: 10, opacity: 0.8, color: textColor }}
-        yAxisColor={axisColor}
-        // 라인/영역
-        color={lineColor}
-        curved
-        thickness={2}
-        hideDataPoints
-        areaChart
-        startFillColor={"rgb(234, 84, 119)"}
-        endFillColor={"rgb(234, 234, 84)"}
-        startOpacity={0.4}
-        endOpacity={0.1}
-        // 그리드
-        hideRules={false}
-        rulesType="dashed"
-        // 스크롤
-        scrollToEnd={false}
-      />
+    <View
+      className="bg-background/20 rounded-xl pt-5 pb-2"
+      onLayout={onLayoutContainer}
+      style={{ overflow: "hidden" }}
+    >
+      {chartWidth > 0 && (
+        <LineChart
+          data={data}
+          stepHeight={stepHeight}
+          isAnimated
+          width={chartWidth}
+          initialSpacing={INITIAL}
+          endSpacing={END}
+          spacing={spacing} // X축 라벨 간격
+          // X축
+          xAxisLabelTextStyle={{ fontSize: 10, opacity: 0.8, color: textColor }}
+          xAxisType="solid"
+          xAxisColor={axisColor}
+          // Y축
+          maxValue={axis.maxValue}
+          stepValue={axis.stepValue}
+          noOfSections={axis.noOfSections}
+          noOfSectionsBelowXAxis={axis.noOfSectionsBelowXAxis}
+          yAxisLabelTexts={axis.yAxisLabelTexts}
+          yAxisTextStyle={{ fontSize: 10, opacity: 0.8, color: textColor }}
+          yAxisLabelWidth={Y_LABEL_W}
+          yAxisColor={axisColor}
+          // 라인/영역
+          color={lineColor}
+          curved
+          thickness={2}
+          hideDataPoints
+          areaChart
+          startFillColor={"rgb(234, 84, 119)"}
+          endFillColor={"rgb(234, 234, 84)"}
+          startOpacity={0.4}
+          endOpacity={0.1}
+          // 그리드
+          hideRules={false}
+          rulesType="dashed"
+          // 스크롤
+          scrollToEnd={false}
+        />
+      )}
     </View>
   );
 }
