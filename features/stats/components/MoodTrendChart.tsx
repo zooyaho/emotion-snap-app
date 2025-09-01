@@ -5,13 +5,11 @@ import { useTheme } from "@providers/ThemeProvider";
 import getColorByTwToken from "@utils/getColorByTwToken";
 import { MOOD_SCORE } from "@features/mood/data/mood.data";
 import type { MoodEntryType } from "@features/mood/services/moodStorage";
-import { getWeekOfMonth, isSameMonth } from "date-fns";
 
-type Mode = "day" | "month";
+type Mode = "day" | "month" | "year";
 
 type MoodTrendChartPropsType = {
   mode: Mode;
-  /** 일간: 해당 날짜 데이터 / 월간: 해당 월의 데이터들 */
   noteEntries: MoodEntryType[];
   /** 차트 높이 제어용(섹션 높이). 기본 30 */
   stepHeight?: number;
@@ -34,9 +32,16 @@ export default function MoodTrendChart({
 
   /** ───────────────────── X축 데이터 집계 ───────────────────── */
   const data = useMemo(() => {
-    return mode === "day"
-      ? buildDaySeries(noteEntries)
-      : buildMonthSeriesByFixedWeeks(noteEntries);
+    switch (mode) {
+      case "day":
+        return buildDaySeries(noteEntries);
+      case "month":
+        return buildMonthSeriesByFixedWeeks(noteEntries);
+      case "year":
+        return buildYearSeries(noteEntries);
+      default:
+        return [];
+    }
   }, [mode, noteEntries]);
 
   /** ───────────────────── Y축(3..-3) 고정 ───────────────────── */
@@ -159,4 +164,26 @@ function buildMonthSeriesByFixedWeeks(entries: MoodEntryType[]) {
     { value: avg(sums[3], counts[3]), label: "4주" },
     { value: avg(sums[4], counts[4]), label: "5주" },
   ];
+}
+
+/** ── 연간: 12개월 평균(짝수월만 라벨: 2,4,6,8,10,12) ─────────── */
+function buildYearSeries(entries: MoodEntryType[]) {
+  const sums = Array(12).fill(0) as number[];
+  const counts = Array(12).fill(0) as number[];
+
+  for (const e of entries) {
+    const m = new Date(e.createdAt).getMonth(); // 0..11
+    const score = MOOD_SCORE[e.moodId] ?? 0;
+    sums[m] += score;
+    counts[m] += 1;
+  }
+
+  const avg = (s: number, c: number) => (c ? s / c : 0);
+
+  // 12 포인트(1~12월). 라벨은 짝수월만 표시, 홀수월은 빈 문자열.
+  return Array.from({ length: 12 }, (_, i) => {
+    const month = i + 1;
+    const label = month % 2 === 0 ? `${month}월` : "";
+    return { value: avg(sums[i], counts[i]), label };
+  });
 }
