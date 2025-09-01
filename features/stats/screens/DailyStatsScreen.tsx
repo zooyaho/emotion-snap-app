@@ -18,7 +18,7 @@ import {
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import DailyTrendChart from "../components/DailyTrendChart";
+import MoodTrendChart from "../components/MoodTrendChart";
 
 export const DUMMY_DAY_DATA = [
   {
@@ -158,7 +158,7 @@ export default function DailyStatsScreen() {
       <View className="mt-6 mx-4 gap-3">
         {/* TODO :: tooltip추가 */}
         <Text className="text-base text-neutral-600">감정 흐름</Text>
-        <DailyTrendChart noteEntries={noteEntries} />
+        <MoodTrendChart mode="day" noteEntries={noteEntries} />
       </View>
 
       {/* 월 선택 BottomSheet */}
