@@ -13,7 +13,14 @@ import {
   startOfMonth,
 } from "date-fns";
 import { ko } from "date-fns/locale";
-import { ForwardedRef, forwardRef, useEffect, useMemo, useState } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { View } from "react-native";
 import { Picker } from "react-native-wheel-pick";
 import { AppButton } from "./AppButton";
@@ -74,24 +81,24 @@ const YearMonthDayPickerSheet = forwardRef(function YearMonthDayPickerSheet(
     [minDate, maxDate]
   );
 
-  const months = useMemo(
-    () => getAvailableMonths(year, minDate, maxDate),
-    [year, minDate, maxDate]
-  );
+  const months = useMemo(() => {
+    if (mode === "year") return [];
+    return getAvailableMonths(year, minDate, maxDate);
+  }, [mode, year, minDate, maxDate]);
   const initMonthRaw = getMonth(initialDate) + 1;
   const initMonth = months.includes(initMonthRaw) ? initMonthRaw : months[0];
   const [month, setMonth] = useState(initMonth);
 
-  const days = useMemo(
-    () => getAvailableDays(year, month, minDate, maxDate),
-    [year, month, minDate, maxDate]
-  );
+  const days = useMemo(() => {
+    if (mode !== "year-month-day") return [];
+    return getAvailableDays(year, month, minDate, maxDate);
+  }, [mode, year, month, minDate, maxDate]);
   const initDayRaw = getDate(initialDate);
   const initDay = days.includes(initDayRaw) ? initDayRaw : days[0];
   const [day, setDay] = useState(initDay);
 
   /** 완료 버튼 핸들러 */
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     onConfirm?.({
       year,
       month: mode === "year" ? 1 : month,
@@ -99,13 +106,13 @@ const YearMonthDayPickerSheet = forwardRef(function YearMonthDayPickerSheet(
     });
 
     (ref as React.RefObject<AppBottomSheetRef>)?.current?.dismiss?.(); // 시트 비활성화
-  };
+  }, [onConfirm, mode, year, month, day, ref]);
 
   /** 취소 버튼 핸들러 */
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     onCancel?.();
     (ref as React.RefObject<AppBottomSheetRef>)?.current?.dismiss?.(); // 시트 비활성화
-  };
+  }, [onCancel, ref]);
 
   // 타이틀 포맷 (mode에 따라)
   const titleFmt =
