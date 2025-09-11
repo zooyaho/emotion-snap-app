@@ -2,6 +2,10 @@ import { View, Text, ScrollView } from "react-native";
 import MoodTrendChart from "../components/MoodTrendChart";
 import PeriodPickerButton from "@components/common/PeriodPickerButton";
 import { MoodEntryType } from "@features/mood/services/moodStorage";
+import YearMonthDayPickerSheet from "@components/common/YearMonthDayPickerSheet";
+import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
+import { useMemo, useRef, useState } from "react";
+import { getYear } from "date-fns";
 
 const YEAR = 2025;
 
@@ -92,13 +96,27 @@ export const DUMMY_YEAR_DATA: MoodEntryType[] = [
 ];
 
 export default function YearlyStatsScreen() {
+  const today = new Date();
+  const yearPickerSheetRef = useRef<AppBottomSheetRef>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>(today); // 현재 선택 날짜 (기본: 오늘)
+  const selectedY = useMemo(() => {
+    const year = getYear(selectedDate);
+    return { year: year };
+  }, [selectedDate]); // 현재 선택 연도 (기본: 오늘에 해당되는 연도)
+
+  /** yearMonthDayPickerSheet open 핸들러 */
+  const openYearPickerSheet = () => yearPickerSheetRef.current?.present();
+
+  /** yearMonthDayPickerSheet confirm 핸들러 */
+  const handleConfirm = (pickedDate: Date) => {
+    setSelectedDate(pickedDate);
+  };
+
   return (
     <ScrollView className="flex-1 pt-6">
       <PeriodPickerButton
-        value={{ year: 2025 }}
-        onPress={() => {}}
-        // onPress={openMonthSheet}
-        textClassName="text-xl"
+        value={selectedY}
+        onPress={openYearPickerSheet}
         className="px-4"
       />
 
@@ -109,17 +127,13 @@ export default function YearlyStatsScreen() {
       </View>
 
       {/* 연도 선택 BottomSheet */}
-      {/* <AppScrollableBottomSheet
-        ref={monthSelectBottomSheetRef}
-        title="월 선택"
-        listData={monthSelectBottomSheetList}
-        getKey={(m) => `${m.year}-${m.month}`}
-        getLabel={(m) => ymLabel(m)}
-        isSelected={(m) =>
-          m.year === selectedYM.year && m.month === selectedYM.month
-        }
-        onPickItem={handleMonthPick}
-      /> */}
+      <YearMonthDayPickerSheet
+        ref={yearPickerSheetRef}
+        mode="year"
+        initialDate={selectedDate}
+        recentYears={10}
+        onConfirm={handleConfirm}
+      />
     </ScrollView>
   );
 }

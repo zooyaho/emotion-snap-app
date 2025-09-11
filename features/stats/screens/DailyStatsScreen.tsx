@@ -130,7 +130,6 @@ export default function DailyStatsScreen() {
       <PeriodPickerButton
         value={selectedYM}
         onPress={openYearMonthPickerSheet}
-        textClassName="text-xl"
         className="px-4"
       />
       <View className="mt-4">

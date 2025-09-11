@@ -37,10 +37,7 @@ export default function PeriodPickerButton({
       className={cn("self-start flex-row items-center", className)}
     >
       <Text
-        className={cn(
-          "text-base font-semibold text-neutral-600",
-          textClassName
-        )}
+        className={cn("text-xl font-semibold text-neutral-600", textClassName)}
       >
         {label}
       </Text>

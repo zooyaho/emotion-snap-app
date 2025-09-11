@@ -10,7 +10,7 @@ import {
   MoodEntryType,
   removeMoodEntry,
 } from "@features/mood/services/moodStorage";
-import { getMonthDays, getTodayYearMonth, getYearMonth } from "@utils/date";
+import { getMonthDays, getYearMonth } from "@utils/date";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Text, View } from "react-native";
