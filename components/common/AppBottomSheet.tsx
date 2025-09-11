@@ -66,7 +66,7 @@ export const AppBottomSheet = forwardRef(function AppBottomSheet(
     enableDynamicSizing = false, // 동적 사이징 끄기
     enableOverDrag = false, // 위로 더 끌어올리는 과-드래그 방지
     enablePanDownToClose = true, // 아래로 끌어내리면 닫힘
-    backgroundLight = "#FAF9F6",
+    backgroundLight = "#fff",
     backgroundDark = "#141417",
     children,
     index = 0,

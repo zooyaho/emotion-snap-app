@@ -1,0 +1,198 @@
+import {
+  AppBottomSheet,
+  AppBottomSheetRef,
+} from "@components/common/AppBottomSheet";
+import { useTheme } from "@providers/ThemeProvider";
+import getColorByTwToken from "@utils/getColorByTwToken";
+import {
+  format,
+  getDate,
+  getMonth,
+  getYear,
+  startOfDay,
+  startOfMonth,
+} from "date-fns";
+import { ko } from "date-fns/locale";
+import { ForwardedRef, forwardRef, useEffect, useMemo, useState } from "react";
+import { View } from "react-native";
+import { Picker } from "react-native-wheel-pick";
+import { AppButton } from "./AppButton";
+import {
+  getAvailableDays,
+  getAvailableMonths,
+  getAvailableYears,
+  getRecentDateRange,
+} from "@utils/date";
+
+/**
+ *  Props Type
+ *  mode:
+ *   - 'year'             : 연도만 선택
+ *   - 'year-month'       : 연/월 선택
+ *   - 'year-month-day'   : 연/월/일 선택
+ *  최근 N년만 허용 (기본 10). 미래(오늘 이후)는 선택 불가.
+ *
+ */
+type ModeType = "year" | "year-month" | "year-month-day";
+
+type YearMonthDayPickerSheetPropsType = {
+  initialDate?: Date; // 기본: 오늘
+  onConfirm?: (v: { year: number; month?: number; day?: number }) => void;
+  onCancel?: () => void;
+  recentYears?: number; // 최근 N년 (기본 10)
+  snapPoints?: Array<string | number>;
+  className?: string;
+  mode?: ModeType; // 기본 'year-month'
+};
+
+const YearMonthDayPickerSheet = forwardRef(function YearMonthDayPickerSheet(
+  {
+    initialDate = new Date(),
+    onConfirm,
+    onCancel,
+    recentYears = 10,
+    snapPoints,
+    className,
+    mode = "year-month",
+  }: YearMonthDayPickerSheetPropsType,
+  ref: ForwardedRef<AppBottomSheetRef>
+) {
+  const { theme } = useTheme();
+  const textColor = getColorByTwToken(theme, "neutral-600");
+
+  // 범위 (최근 N년 ~ 오늘)
+  const { minDate, maxDate } = useMemo(
+    () => getRecentDateRange(recentYears),
+    [recentYears]
+  );
+  const initYear = getYear(initialDate);
+  const [year, setYear] = useState(initYear);
+
+  // 연/월/일 리스트
+  const years = useMemo(
+    () => getAvailableYears(minDate, maxDate),
+    [minDate, maxDate]
+  );
+
+  const months = useMemo(
+    () => getAvailableMonths(year, minDate, maxDate),
+    [year, minDate, maxDate]
+  );
+  const initMonthRaw = getMonth(initialDate) + 1;
+  const initMonth = months.includes(initMonthRaw) ? initMonthRaw : months[0];
+  const [month, setMonth] = useState(initMonth);
+
+  const days = useMemo(
+    () => getAvailableDays(year, month, minDate, maxDate),
+    [year, month, minDate, maxDate]
+  );
+  const initDayRaw = getDate(initialDate);
+  const initDay = days.includes(initDayRaw) ? initDayRaw : days[0];
+  const [day, setDay] = useState(initDay);
+
+  /** 완료 버튼 핸들러 */
+  const handleConfirm = () => {
+    onConfirm?.({
+      year,
+      month: mode === "year" ? 1 : month,
+      day: mode === "year" || mode === "year-month" ? 1 : day,
+    });
+
+    (ref as React.RefObject<AppBottomSheetRef>)?.current?.dismiss?.(); // 시트 비활성화
+  };
+
+  /** 취소 버튼 핸들러 */
+  const handleCancel = () => {
+    onCancel?.();
+    (ref as React.RefObject<AppBottomSheetRef>)?.current?.dismiss?.(); // 시트 비활성화
+  };
+
+  // 타이틀 포맷 (mode에 따라)
+  const titleFmt =
+    mode === "year" ? "yyyy" : mode === "year-month" ? "yyyy.MM" : "yyyy.MM.dd";
+  const title = format(
+    mode === "year"
+      ? startOfMonth(new Date(year, 0, 1))
+      : mode === "year-month"
+        ? startOfMonth(new Date(year, month - 1, 1))
+        : startOfDay(new Date(year, month - 1, day)),
+    titleFmt,
+    { locale: ko }
+  );
+
+  // 연도 바뀌면 월/일 보정
+  useEffect(() => {
+    const ms = getAvailableMonths(year, minDate, maxDate);
+    if (!ms.includes(month)) {
+      setMonth(ms[0]);
+      // 월도 바뀌면 day도 다음 effect에서 다시 보정됨
+    } else {
+      // 월 범위에 있어도 일은 다시 체크
+      const ds = getAvailableDays(year, month, minDate, maxDate);
+      if (!ds.includes(day)) setDay(ds[0]);
+    }
+  }, [year]);
+
+  // 월 바뀌면 일 보정
+  useEffect(() => {
+    const ds = getAvailableDays(year, month, minDate, maxDate);
+    if (!ds.includes(day)) setDay(ds[0]);
+  }, [month]);
+
+  return (
+    <AppBottomSheet
+      ref={ref}
+      title={title}
+      snapPoints={snapPoints}
+      enablePanDownToClose={false}
+      contentClassName={className}
+    >
+      <View className="flex-row justify-center gap-6">
+        {/* Year */}
+        <Picker
+          style={{ width: 120, height: 216, backgroundColor: "transparent" }}
+          pickerData={years.map(String)}
+          selectedValue={String(year)}
+          onValueChange={(v: string) => setYear(Number(v))}
+          textColor={textColor}
+          textSize={18}
+          itemSpace={24}
+        />
+
+        {/* Month */}
+        {mode !== "year" && (
+          <Picker
+            style={{ width: 100, height: 216, backgroundColor: "transparent" }}
+            pickerData={months.map((m) => m.toString().padStart(2, "0"))}
+            selectedValue={String(month).padStart(2, "0")}
+            onValueChange={(v: string) => setMonth(Number(v))}
+            textColor={textColor}
+            textSize={18}
+            itemSpace={24}
+          />
+        )}
+
+        {/* Day */}
+        {mode === "year-month-day" && (
+          <Picker
+            style={{ width: 100, height: 216, backgroundColor: "transparent" }}
+            pickerData={days.map((d) => d.toString().padStart(2, "0"))}
+            selectedValue={String(day).padStart(2, "0")}
+            onValueChange={(v: string) => setDay(Number(v))}
+            textColor={textColor}
+            textSize={18}
+            itemSpace={24}
+          />
+        )}
+      </View>
+
+      {/* Action Buttons */}
+      <View className="flex-row gap-3 mt-2">
+        <AppButton title="취소" variant="outline" onPress={handleCancel} />
+        <AppButton title="완료" onPress={handleConfirm} />
+      </View>
+    </AppBottomSheet>
+  );
+});
+
+export default YearMonthDayPickerSheet;

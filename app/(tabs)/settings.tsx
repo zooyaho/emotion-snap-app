@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 사용
 import { MoodEntryType } from "@features/mood/services/moodStorage";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import DateChip from "@components/common/DateChip";
+import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
+import YearMonthDayPickerSheet from "@components/common/YearMonthDayPickerSheet";
 
 export const dummyMoods: MoodEntryType[] = [
   {
@@ -70,6 +72,15 @@ export default function Settings() {
   const ref = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ["45%"], []);
 
+  const sheetRef = useRef<AppBottomSheetRef>(null);
+
+  const openPicker = () => sheetRef.current?.present();
+
+  const handleConfirm = ({ year, month }: { year: number; month: number }) => {
+    // 선택 결과로 목록 필터링/차트 업데이트 등
+    console.log("선택된 연월:", year, month);
+  };
+
   return (
     <>
       <ScrollView className="flex-1 gap-4 p-8">
@@ -79,6 +90,15 @@ export default function Settings() {
           <DateChip type="disabled" weekday={"목"} day={2} />
           <DateChip type="selected" weekday={"금"} day={3} />
         </View>
+
+        <AppButton title="Open YearMonthPickerSheet!" onPress={openPicker} />
+
+        <YearMonthDayPickerSheet
+          ref={sheetRef}
+          // entries={entries}
+          onConfirm={handleConfirm}
+        />
+
         {/* <AppButton
           title="Open BottomSheet!"
           onPress={() => {
