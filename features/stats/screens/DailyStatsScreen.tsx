@@ -1,20 +1,13 @@
-import AppScrollableBottomSheet from "@components/common/AppScrollableBottomSheet";
+import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
 import DateChipRow from "@components/common/DateChipRow";
 import PeriodPickerButton from "@components/common/PeriodPickerButton";
+import YearMonthDayPickerSheet from "@components/common/YearMonthDayPickerSheet";
 import {
   getMoodEntries,
   MoodEntryType,
 } from "@features/mood/services/moodStorage";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useTheme } from "@providers/ThemeProvider";
-import {
-  getMonthDays,
-  getMonthsOfYear,
-  getTodayYearMonth,
-  getYearMonth,
-  YearMonthType,
-  ymLabel,
-} from "@utils/date";
+import { getMonthDays, getTodayYearMonth, getYearMonth } from "@utils/date";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -85,34 +78,27 @@ export const DUMMY_DAY_DATA = [
 
 export default function DailyStatsScreen() {
   const today = new Date();
-  const monthSelectBottomSheetRef = useRef<BottomSheetModal>(null);
+  const yearMonthPickerSheetRef = useRef<AppBottomSheetRef>(null);
   const [noteEntries, setNoteEntries] = useState<MoodEntryType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { theme } = useTheme();
 
   const [selectedDate, setSelectedDate] = useState<Date>(today); // 현재 선택 날짜 (기본: 오늘)
   const selectedYM = useMemo(() => getYearMonth(selectedDate), [selectedDate]); // 현재 선택 연도/월 (기본: 오늘에 해당되는 연도/월)
-  const todayYM = getTodayYearMonth();
 
   const dateChipList = useMemo(
     () => getMonthDays(selectedYM.year, selectedYM.month),
     [selectedYM.year, selectedYM.month]
   );
-  /** 월 선택 BottomSheet > 월 리스트(최신순) */
-  const monthSelectBottomSheetList = useMemo(
-    () => getMonthsOfYear(selectedYM.year, true).reverse(),
-    [selectedYM.year]
-  );
 
-  /** 월 선택 BottomSheet 열기 */
-  const openMonthSheet = () => monthSelectBottomSheetRef.current?.present();
+  /** YearMonthDayPickerSheet open 핸들러 */
+  const openYearMonthPickerSheet = () => {
+    yearMonthPickerSheetRef.current?.present();
+  };
 
-  /** 월 선택 핸들러: 선택 날짜를 해당 월로 옮기기 (같은 해/월이면 오늘 유지, 아니면 1일로) */
-  const handleMonthPick = (ym: YearMonthType) => {
-    const isTodayMonth = ym.year === todayYM.year && ym.month === todayYM.month;
-    const nextDate = isTodayMonth ? today : new Date(ym.year, ym.month - 1, 1);
-    setSelectedDate(nextDate);
-    monthSelectBottomSheetRef.current?.dismiss(); // 바텀시트 닫기
+  /** YearMonthDayPickerSheet confirm 핸들러 */
+  const handleConfirm = (pickedDate: Date) => {
+    setSelectedDate(pickedDate);
   };
 
   /** 선택된 날짜의 기록 로드 */
@@ -143,7 +129,7 @@ export default function DailyStatsScreen() {
     <ScrollView className="flex-1 pt-6">
       <PeriodPickerButton
         value={selectedYM}
-        onPress={openMonthSheet}
+        onPress={openYearMonthPickerSheet}
         textClassName="text-xl"
         className="px-4"
       />
@@ -161,17 +147,13 @@ export default function DailyStatsScreen() {
         <MoodTrendChart mode="day" noteEntries={noteEntries} />
       </View>
 
-      {/* 월 선택 BottomSheet */}
-      <AppScrollableBottomSheet
-        ref={monthSelectBottomSheetRef}
-        title="월 선택"
-        listData={monthSelectBottomSheetList}
-        getKey={(m) => `${m.year}-${m.month}`}
-        getLabel={(m) => ymLabel(m)}
-        isSelected={(m) =>
-          m.year === selectedYM.year && m.month === selectedYM.month
-        }
-        onPickItem={handleMonthPick}
+      {/* 연/월 선택 BottomSheet */}
+      <YearMonthDayPickerSheet
+        ref={yearMonthPickerSheetRef}
+        mode="year-month"
+        initialDate={selectedDate}
+        recentYears={10}
+        onConfirm={handleConfirm}
       />
     </ScrollView>
   );

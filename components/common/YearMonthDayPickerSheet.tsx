@@ -44,7 +44,7 @@ type ModeType = "year" | "year-month" | "year-month-day";
 
 type YearMonthDayPickerSheetPropsType = {
   initialDate?: Date; // 기본: 오늘
-  onConfirm?: (v: { year: number; month?: number; day?: number }) => void;
+  onConfirm?: (v: Date) => void;
   onCancel?: () => void;
   recentYears?: number; // 최근 N년 (기본 10)
   snapPoints?: Array<string | number>;
@@ -99,11 +99,20 @@ const YearMonthDayPickerSheet = forwardRef(function YearMonthDayPickerSheet(
 
   /** 완료 버튼 핸들러 */
   const handleConfirm = useCallback(() => {
-    onConfirm?.({
-      year,
-      month: mode === "year" ? 1 : month,
-      day: mode === "year" || mode === "year-month" ? 1 : day,
-    });
+    let pickedDate: Date;
+
+    if (mode === "year") {
+      // 연도만 선택된 경우 → 1월 1일
+      pickedDate = new Date(year, 0, 1);
+    } else if (mode === "year-month") {
+      // 연/월 선택된 경우 → 해당 월의 1일
+      pickedDate = new Date(year, (month ?? 1) - 1, 1);
+    } else {
+      // 연/월/일 선택된 경우 → 해당 일자
+      pickedDate = new Date(year, (month ?? 1) - 1, day ?? 1);
+    }
+
+    onConfirm?.(pickedDate);
 
     (ref as React.RefObject<AppBottomSheetRef>)?.current?.dismiss?.(); // 시트 비활성화
   }, [onConfirm, mode, year, month, day, ref]);

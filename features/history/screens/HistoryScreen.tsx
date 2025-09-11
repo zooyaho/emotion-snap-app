@@ -24,7 +24,6 @@ export default function HistoryScreen() {
 
   const [selectedDate, setSelectedDate] = useState<Date>(today); // 현재 선택 날짜 (기본: 오늘)
   const selectedYM = useMemo(() => getYearMonth(selectedDate), [selectedDate]); // 현재 선택 연도/월 (기본: 오늘에 해당되는 연도/월)
-  const todayYM = getTodayYearMonth();
 
   const dateChipList = useMemo(
     () => getMonthDays(selectedYM.year, selectedYM.month),
@@ -36,13 +35,8 @@ export default function HistoryScreen() {
     yearMonthPickerSheetRef.current?.present();
 
   /** YearMonthDayPickerSheet confirm 핸들러 */
-  const handleConfirm = (v: { year: number; month?: number; day?: number }) => {
-    const isTodayMonth = v.year === todayYM.year && v.month === todayYM.month;
-    const nextDate = isTodayMonth
-      ? today
-      : new Date(v.year, (v.month ?? 1) - 1, v.day ?? 1);
-
-    setSelectedDate(nextDate);
+  const handleConfirm = (pickedDate: Date) => {
+    setSelectedDate(pickedDate);
   };
 
   /** 기록 삭제 핸들러 */
