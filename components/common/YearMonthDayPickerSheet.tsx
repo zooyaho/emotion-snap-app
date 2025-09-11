@@ -139,6 +139,27 @@ const YearMonthDayPickerSheet = forwardRef(function YearMonthDayPickerSheet(
     if (!ds.includes(day)) setDay(ds[0]);
   }, [month]);
 
+  /**
+   * initialDate가 변경될 때 내부 year/month/day 상태도 함께 동기화
+   * - initialDate prop은 useState 초기화 시에만 반영되므로, 탭 전환 등으로 부모에서 initialDate가 바뀔 경우 반영하기 위해 추가
+   */
+  useEffect(() => {
+    // 연
+    const nextYear = getYear(initialDate);
+    // 월
+    const ms = getAvailableMonths(nextYear, minDate, maxDate);
+    const rawMonth = getMonth(initialDate) + 1; // 1..12
+    const nextMonth = ms.includes(rawMonth) ? rawMonth : ms[0];
+    // 일
+    const ds = getAvailableDays(nextYear, nextMonth, minDate, maxDate);
+    const rawDay = getDate(initialDate);
+    const nextDay = ds.includes(rawDay) ? rawDay : ds[0];
+
+    setYear(nextYear);
+    setMonth(nextMonth);
+    setDay(nextDay);
+  }, [initialDate, minDate, maxDate]);
+
   return (
     <AppBottomSheet
       ref={ref}

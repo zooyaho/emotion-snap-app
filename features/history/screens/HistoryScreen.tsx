@@ -1,3 +1,4 @@
+import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
 import DateChipRow from "@components/common/DateChipRow";
 import LoadingIndicator from "@components/common/LoadingIndicator";
 import PeriodPickerButton from "@components/common/PeriodPickerButton";
@@ -9,7 +10,6 @@ import {
   MoodEntryType,
   removeMoodEntry,
 } from "@features/mood/services/moodStorage";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { getMonthDays, getTodayYearMonth, getYearMonth } from "@utils/date";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -18,7 +18,7 @@ import { FlatList } from "react-native-gesture-handler";
 
 export default function HistoryScreen() {
   const today = new Date();
-  const yearMonthPickerSheetRef = useRef<BottomSheetModal>(null);
+  const yearMonthPickerSheetRef = useRef<AppBottomSheetRef>(null);
   const [noteEntries, setNoteEntries] = useState<MoodEntryType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
