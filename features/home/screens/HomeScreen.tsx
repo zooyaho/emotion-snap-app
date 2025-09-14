@@ -65,7 +65,7 @@ export default function HomeScreen() {
         ) : todayNoteEntries.length === 0 ? (
           <View className="flex-row mt-16 items-center justify-center">
             <Text className="text-md text-center text-neutral-600">
-              순간의 감정을 기록하세요
+              순간의 감정을 기록해 보세요
             </Text>
             <MoodImage name="spectacular" height={32} width={32} />
           </View>

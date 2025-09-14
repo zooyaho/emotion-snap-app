@@ -144,7 +144,7 @@ export default function DailyStatsScreen() {
       <View className="mt-6 mx-4 gap-3">
         {/* TODO :: tooltip추가 */}
         <Text className="text-base text-neutral-600">감정 비율</Text>
-        <MoodPieChart noteEntries={noteEntries} />
+        <MoodPieChart mode="day" noteEntries={noteEntries} />
       </View>
 
       <View className="mt-6 mx-4 gap-3">
