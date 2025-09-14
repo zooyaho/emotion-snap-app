@@ -16,6 +16,8 @@ export const moodColors = {
   good: { DEFAULT: "#FDDD6F", text: "#635522" },
   happy: { DEFAULT: "#DFEBFF", text: "#5C6CA1" },
   spectacular: { DEFAULT: "#FFA7BC", text: "#66424B" },
+  positive: { DEFAULT: "#FFA7BC", text: "#66424B" },
+  negative: { DEFAULT: "#8CA4EE", text: "#363F59" },
 };
 
 // 낮을수록 부정, 높을수록 긍정

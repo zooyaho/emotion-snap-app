@@ -12,6 +12,7 @@ import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import MoodTrendChart from "../components/MoodTrendChart";
+import MoodPieChart from "../components/MoodPieChart";
 
 export const DUMMY_DAY_DATA = [
   {
@@ -138,6 +139,12 @@ export default function DailyStatsScreen() {
           selectedDate={selectedDate}
           onSelect={(d) => setSelectedDate(d.date)}
         />
+      </View>
+
+      <View className="mt-6 mx-4 gap-3">
+        {/* TODO :: tooltip추가 */}
+        <Text className="text-base text-neutral-600">감정 비율</Text>
+        <MoodPieChart noteEntries={noteEntries} />
       </View>
 
       <View className="mt-6 mx-4 gap-3">
