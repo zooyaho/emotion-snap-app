@@ -14,6 +14,7 @@ import { ScrollView, Text, View } from "react-native";
 import MoodTrendChart from "../components/MoodTrendChart";
 import MoodPieChart from "../components/MoodPosNegPieChart";
 import MoodRatioCard from "../components/MoodRatioCard";
+import StatsCardLayout from "../components/StatsCardLayout";
 
 export const DUMMY_DAY_DATA = [
   {
@@ -142,16 +143,16 @@ export default function DailyStatsScreen() {
         />
       </View>
 
-      <View className="mt-6 mx-4 gap-3">
-        <Text className="text-base text-neutral-600">감정 비율</Text>
+      {/* 감정 비율 카드 영역 */}
+      <StatsCardLayout title="감정 비율">
         <MoodRatioCard mode="day" noteEntries={noteEntries} />
-      </View>
+      </StatsCardLayout>
 
-      <View className="mt-6 mx-4 gap-3">
+      {/* 감정 흐름 카드 영역 */}
+      <StatsCardLayout title="감정 흐름">
         {/* TODO :: tooltip추가 */}
-        <Text className="text-base text-neutral-600">감정 흐름</Text>
         <MoodTrendChart mode="day" noteEntries={noteEntries} />
-      </View>
+      </StatsCardLayout>
 
       {/* 연/월 선택 BottomSheet */}
       <YearMonthDayPickerSheet
