@@ -4,6 +4,7 @@ import { cn } from "@utils/cn";
 import {
   GestureResponderEvent,
   Pressable,
+  PressableProps,
   Text,
   ViewStyle,
 } from "react-native";
@@ -29,7 +30,9 @@ type AppButtonPropsType = {
   /** 아이콘과 텍스트 간격(px) */
   gap?: number;
   isLoading?: boolean;
-};
+  className?: string;
+  children?: React.ReactNode;
+} & Omit<PressableProps, "onPress" | "style" | "children" | "disabled">;
 
 export function AppButton({
   title,
@@ -42,6 +45,8 @@ export function AppButton({
   iconPosition = "right",
   gap = 6,
   isLoading,
+  className,
+  children,
 }: AppButtonPropsType) {
   // 사이즈별 높이/패딩/폰트
   const sizeCls = {
@@ -68,7 +73,7 @@ export function AppButton({
     primary: "bg-primary-500 pressed:bg-primary-600 disabled:bg-neutral-200",
     secondary: "bg-primary-50 pressed:bg-primary-100 disabled:bg-neutral-100",
     outline:
-      "bg-background border border-primary-500 pressed:bg-primary-50 disabled:border-neutral-300 disabled:bg-neutral-100",
+      "bg-transparent border border-primary-500 pressed:bg-primary-50 disabled:border-neutral-300 disabled:bg-neutral-100",
   }[variant];
 
   const variantTextCls = {
@@ -103,7 +108,8 @@ export function AppButton({
         "flex-1 group flex-row items-center justify-center",
         sizeCls.container,
         variantContainerCls,
-        "disabled:opacity-80"
+        "disabled:opacity-80",
+        className
       )}
       style={[gapStyle, style]}
       // android_ripple={{ color: "rgba(0,0,0,0.06)", borderless: false }}
@@ -140,6 +146,7 @@ export function AppButton({
           )}
         </>
       )}
+      {children}
     </Pressable>
   );
 }

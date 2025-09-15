@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { cn } from "@utils/cn";
 import { useTheme } from "@providers/ThemeProvider";
 import MoodImage from "./MoodImage";
-import { getCounts } from "../utils/moodStats";
+import { getCountMoodEntriesById } from "../utils/moodStats";
 
 type MoodVerticalBarsPropsType = {
   moodEntries: MoodEntryType[];
@@ -23,7 +23,10 @@ export default function MoodVerticalBars({
   const { theme } = useTheme();
   const moodIds = MOOD_OPTIONS.map((o) => o.id);
 
-  const moodCounts = useMemo(() => getCounts(moodEntries), [moodEntries]);
+  const moodCounts = useMemo(
+    () => getCountMoodEntriesById(moodEntries),
+    [moodEntries]
+  );
   const maxCount = useMemo(
     () => Math.max(1, ...Object.values(moodCounts)),
     [moodCounts]

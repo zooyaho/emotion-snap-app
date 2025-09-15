@@ -1,11 +1,15 @@
+import { AppButton } from "@components/common/AppButton";
+import { ThemedIonicon } from "@components/common/ThemedIonicon";
 import MoodImage from "@features/mood/components/MoodImage";
 import { moodColors } from "@features/mood/data/mood.data";
 import { MoodEntryType } from "@features/mood/services/moodStorage";
+import { buildMoodChartPosNegData } from "@features/mood/utils/moodStats";
 import { useTheme } from "@providers/ThemeProvider";
 import getColorByTwToken from "@utils/getColorByTwToken";
-import { useMemo } from "react";
-import { View, Text } from "react-native";
+import { useMemo, useState } from "react";
+import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
+import MoodPercentGrid from "./MoodPercentGrid";
 
 type Mode = "day" | "month" | "year";
 
@@ -15,8 +19,6 @@ type MoodPieChartPropsType = {
   size?: number; // 바깥 반지름
 };
 
-const POSITIVE_SET = new Set(["good", "happy", "spectacular"] as const);
-const NEGATIVE_SET = new Set(["angry", "upset", "sad"] as const);
 const MODE_LABELS = {
   day: {
     pos: "오늘은 전체적으로 긍정적인 날이었습니다.",
@@ -42,23 +44,19 @@ export default function MoodPieChart({
 }: MoodPieChartPropsType) {
   const { theme } = useTheme();
   const chartEmptyTrackColor = getColorByTwToken(theme, "neutral-200");
-  const { positive, negative } = useMemo(() => {
-    let pos = 0;
-    let neg = 0;
+  const [isMoodPercentGridExpanded, setIsMoodPercentGridExpanded] =
+    useState(false);
 
-    for (const note of noteEntries) {
-      if (POSITIVE_SET.has(note.moodId as any)) pos += 1;
-      else if (NEGATIVE_SET.has(note.moodId as any)) neg += 1;
-    }
-    return { positive: pos, negative: neg };
-  }, [noteEntries]);
-
-  const total = positive + negative;
+  const {
+    counts: moodCounts,
+    positive,
+    negative,
+    total,
+    posPct,
+    negPct,
+  } = useMemo(() => buildMoodChartPosNegData(noteEntries), [noteEntries]);
   const isEmpty = total === 0;
-  const posPct = isEmpty ? 0 : Math.round((positive / total) * 100);
-  const negPct = isEmpty ? 0 : 100 - posPct;
-
-  const data = isEmpty
+  const pieChartData = isEmpty
     ? [{ value: 1, color: chartEmptyTrackColor }]
     : [
         { value: positive, color: moodColors.positive.DEFAULT },
@@ -74,7 +72,7 @@ export default function MoodPieChart({
   return (
     <View className="items-center">
       <PieChart
-        data={data}
+        data={pieChartData}
         donut
         innerCircleColor="transparent"
         radius={size}
@@ -92,42 +90,78 @@ export default function MoodPieChart({
                   {Math.max(posPct, negPct)}%
                 </Text>
                 <Text className="text-xs text-neutral-500">
-                  {posPct > negPct ? "긍정" : "부정"}
+                  {posPct === negPct
+                    ? "긍정/부정"
+                    : posPct > negPct
+                      ? "긍정"
+                      : "부정"}
                 </Text>
               </>
             )}
           </View>
         )}
       />
+      {/* 감정 비율 범례 (긍정/부정) */}
+      <View className="mt-2 flex-row items-center gap-x-4">
+        <View className="flex-row items-center gap-x-1">
+          <View
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: moodColors.positive.DEFAULT }}
+          />
+          <MoodImage name="spectacular" height={18} width={18} />
+          <Text className="text-xs text-neutral-500">{posPct}%</Text>
+        </View>
+        <View className="flex-row items-center gap-x-1">
+          <View
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: moodColors.negative.DEFAULT }}
+          />
+          <MoodImage name="upset" height={20} width={20} />
+          <Text className="text-xs text-neutral-500">{negPct}%</Text>
+        </View>
+      </View>
+
       {/* 요약 메세지 */}
-      <View className="mt-4 flex-row items-center justify-center">
-        <Text className="text-sm text-center text-neutral-600">
+      <View className="mt-4 flex-row items-center justify-center p-2 px-4 bg-background/50 rounded-lg">
+        <Text className="text-md text-center text-neutral-600">
           {isEmpty
             ? "순간의 감정을 기록해 보세요"
             : getSummaryText(mode, posPct, negPct)}
         </Text>
         {isEmpty && <MoodImage name="spectacular" height={24} width={24} />}
       </View>
-      {/* 감정 비율 범례 (긍정/부정) */}
       {!isEmpty && (
-        <View className="mt-3 flex-row items-center gap-x-4">
-          <View className="flex-row items-center gap-x-1">
+        <>
+          {/* 자세히 보기 버튼 */}
+          <AppButton
+            title={"자세히 보기"}
+            variant="outline"
+            size="xs"
+            onPress={() => setIsMoodPercentGridExpanded((v) => !v)}
+            accessibilityLabel="자세히 보기"
+            accessibilityRole="button"
+            className="mt-4"
+          >
             <View
-              className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: moodColors.positive.DEFAULT }}
-            />
-            <MoodImage name="spectacular" height={24} width={24} />
-            <Text className="text-sm text-neutral-500">{posPct}%</Text>
-          </View>
-          <View className="flex-row items-center gap-x-1">
-            <View
-              className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: moodColors.negative.DEFAULT }}
-            />
-            <MoodImage name="upset" height={26} width={26} />
-            <Text className="text-sm text-neutral-500">{negPct}%</Text>
-          </View>
-        </View>
+              style={{
+                transform: [
+                  { rotate: isMoodPercentGridExpanded ? "180deg" : "0deg" },
+                ],
+              }}
+            >
+              <ThemedIonicon
+                name="chevron-down"
+                size={20}
+                colorToken="primary-600"
+              />
+            </View>
+          </AppButton>
+          {/* 감정별 퍼센트 Grid 영역 */}
+          {/* TODO:: 펼침 시 아래 Grid와 0.2~0.25s 페이드/슬라이드 */}
+          {isMoodPercentGridExpanded && (
+            <MoodPercentGrid counts={moodCounts} total={total} />
+          )}
+        </>
       )}
     </View>
   );

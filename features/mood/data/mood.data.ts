@@ -22,10 +22,17 @@ export const moodColors = {
 
 // 낮을수록 부정, 높을수록 긍정
 export const MOOD_SCORE: Record<MoodIdType, number> = {
-  angry: -2,
-  upset: -1,
+  angry: -3,
+  upset: -2,
   sad: -1,
   good: 1,
   happy: 2,
   spectacular: 3,
 } as const;
+
+export const MOOD_POSITIVE_SET = new Set([
+  "good",
+  "happy",
+  "spectacular",
+] as const);
+export const MOOD_NEGATIVE_SET = new Set(["angry", "upset", "sad"] as const);
