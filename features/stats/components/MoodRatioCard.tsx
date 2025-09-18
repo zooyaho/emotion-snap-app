@@ -84,7 +84,7 @@ export default function MoodRatioCard({
         <>
           {/* 자세히 보기 버튼 */}
           <AppButton
-            title={"자세히 보기"}
+            title={"감정별 퍼센트 보기"}
             variant="outline"
             size="xs"
             onPress={() => setIsMoodPercentGridExpanded((v) => !v)}

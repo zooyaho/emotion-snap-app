@@ -7,13 +7,12 @@ import {
   MoodEntryType,
 } from "@features/mood/services/moodStorage";
 import { useTheme } from "@providers/ThemeProvider";
-import { getMonthDays, getTodayYearMonth, getYearMonth } from "@utils/date";
+import { getMonthDays, getYearMonth } from "@utils/date";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
-import MoodTrendChart from "../components/MoodTrendChart";
-import MoodPieChart from "../components/MoodPosNegPieChart";
+import { ScrollView, View } from "react-native";
 import MoodRatioCard from "../components/MoodRatioCard";
+import MoodTrendCard from "../components/MoodTrendCard";
 import StatsCardLayout from "../components/StatsCardLayout";
 
 export const DUMMY_DAY_DATA = [
@@ -150,8 +149,7 @@ export default function DailyStatsScreen() {
 
       {/* 감정 흐름 카드 영역 */}
       <StatsCardLayout title="감정 흐름">
-        {/* TODO :: tooltip추가 */}
-        <MoodTrendChart mode="day" noteEntries={noteEntries} />
+        <MoodTrendCard noteEntries={noteEntries} />
       </StatsCardLayout>
 
       {/* 연/월 선택 BottomSheet */}

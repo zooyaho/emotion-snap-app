@@ -10,7 +10,7 @@ export default function StatsCardLayout({
   children,
 }: StatsCardLayoutPropsType) {
   return (
-    <View className="mt-6 mx-4 gap-3">
+    <View className="my-6 mx-4 gap-3">
       <Text className="text-base text-neutral-600">{title}</Text>
       {children}
     </View>
