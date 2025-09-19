@@ -43,6 +43,7 @@ const MoodScoreGuideSheet = forwardRef(function MoodScoreGuideSheet(
       ref={ref}
       title={"감정 점수 안내"}
       contentClassName={className}
+      onDismiss={() => setIsShowExamples(false)}
     >
       <SheetScroll>
         <View className="px-4 pt-4 pb-14">
@@ -107,7 +108,7 @@ const MoodScoreGuideSheet = forwardRef(function MoodScoreGuideSheet(
           {isShowExamples && (
             <View className="mt-2 rounded-2xl border border-neutral-200 p-3">
               {exampleMoodIds.map((id) => (
-                <View className="flex-row items-center gap-2 py-1">
+                <View className="flex-row items-center gap-2 py-1" key={id}>
                   <MoodImage name={id} width={24} height={24} />
                   <Text className="text-sm text-neutral-600">
                     <Text

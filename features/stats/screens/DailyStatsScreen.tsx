@@ -87,7 +87,6 @@ export default function DailyStatsScreen() {
 
   const [selectedDate, setSelectedDate] = useState<Date>(today); // 현재 선택 날짜 (기본: 오늘)
   const selectedYM = useMemo(() => getYearMonth(selectedDate), [selectedDate]); // 현재 선택 연도/월 (기본: 오늘에 해당되는 연도/월)
-
   const dateChipList = useMemo(
     () => getMonthDays(selectedYM.year, selectedYM.month),
     [selectedYM.year, selectedYM.month]

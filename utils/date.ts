@@ -106,7 +106,6 @@ export function getYearMonth(date: Date): YearMonthType {
  *  - 연/월/일 리스트는 min/maxDate에 맞춰 동적으로 제한
  *
  */
-
 export function getRecentDateRange(recentYears: number) {
   const today = startOfDay(new Date());
   // 최근 N년: (올해 - (N-1))년 1월 1일 ~ 오늘
