@@ -1,46 +1,27 @@
 import LoadingIndicator from "@components/common/LoadingIndicator";
 import MoodNoteCard from "@features/mood/components/MoodNoteCard";
 import MoodVerticalBars from "@features/mood/components/MoodVerticalBars";
-import {
-  getTodayMoodEntries,
-  MoodEntryType,
-  removeMoodEntry,
-} from "@features/mood/services/moodStorage";
+import { removeMoodEntry } from "@features/mood/services/moodStorage";
+import { usePeriodEntries } from "@hooks/usePeriodEntries";
 import { cn } from "@utils/cn";
 import { format } from "date-fns";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ScrollView, Text, View } from "react-native";
 import MoodImage from "../../mood/components/MoodImage";
-import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen() {
-  const [todayNoteEntries, setTodayNoteEntries] = useState<MoodEntryType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const loadToday = useCallback(async () => {
-    setIsLoading(true);
-    const list = await getTodayMoodEntries();
-    setTodayNoteEntries(list);
-    setIsLoading(false);
-  }, []);
+  const { noteEntries, isLoading, reload } = usePeriodEntries("day");
 
   // 삭제 핸들러
   const handleDelete = async (id: string) => {
     await removeMoodEntry(id);
-    await loadToday();
+    await reload();
   };
 
   const dateLabel = useMemo(() => {
     const today = new Date();
     return format(today, "M월 d일");
   }, []);
-
-  useFocusEffect(
-    // 화면이 다시 포커스될 때마다 재조회
-    useCallback(() => {
-      loadToday();
-    }, [loadToday])
-  );
 
   return (
     <ScrollView
@@ -53,7 +34,7 @@ export default function HomeScreen() {
       {/* 감정 분포 */}
       <View className="mt-4 gap-3">
         <Text className="text-base text-neutral-600">오늘의 감정 분포</Text>
-        <MoodVerticalBars moodEntries={todayNoteEntries} />
+        <MoodVerticalBars moodEntries={noteEntries} />
       </View>
 
       {/* 기록 리스트 */}
@@ -62,7 +43,7 @@ export default function HomeScreen() {
           <View className="mt-16 items-center justify-center">
             <LoadingIndicator />
           </View>
-        ) : todayNoteEntries.length === 0 ? (
+        ) : noteEntries.length === 0 ? (
           <View className="flex-row mt-16 items-center justify-center">
             <Text className="text-md text-center text-neutral-600">
               순간의 감정을 기록해 보세요
@@ -70,7 +51,7 @@ export default function HomeScreen() {
             <MoodImage name="spectacular" height={32} width={32} />
           </View>
         ) : (
-          todayNoteEntries.map((note) => (
+          noteEntries.map((note) => (
             <MoodNoteCard
               key={note.id}
               id={note.id}

@@ -1,10 +1,10 @@
-import PeriodPickerButton from "@components/common/PeriodPickerButton";
-import YearMonthDayPickerSheet from "@components/common/YearMonthDayPickerSheet";
+import PeriodPickerButton from "@components/PeriodPickerButton";
+import YearMonthDayPickerSheet from "@components/YearMonthDayPickerSheet";
 import { ScrollView } from "react-native";
 import MoodRatioCard from "../components/MoodRatioCard";
 import MoodTrendCard from "../components/MoodTrendCard";
 import StatsCardLayout from "../components/StatsCardLayout";
-import { useStats } from "../hooks/useStats";
+import { usePeriodEntries } from "@hooks/usePeriodEntries";
 
 export default function MonthlyStatsScreen() {
   const {
@@ -13,7 +13,7 @@ export default function MonthlyStatsScreen() {
     openPeriodPickerSheet,
     onPeriodPickerSheetConfirm,
     noteEntries,
-  } = useStats("month");
+  } = usePeriodEntries("month");
 
   return (
     <ScrollView className="flex-1 pt-6">

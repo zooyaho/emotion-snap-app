@@ -1,13 +1,13 @@
 import DateChipRow from "@components/common/DateChipRow";
-import PeriodPickerButton from "@components/common/PeriodPickerButton";
-import YearMonthDayPickerSheet from "@components/common/YearMonthDayPickerSheet";
+import PeriodPickerButton from "@components/PeriodPickerButton";
+import YearMonthDayPickerSheet from "@components/YearMonthDayPickerSheet";
 import { getMonthDays, getYearMonth } from "@utils/date";
 import { ScrollView, View } from "react-native";
 import MoodRatioCard from "../components/MoodRatioCard";
 import MoodTrendCard from "../components/MoodTrendCard";
 import StatsCardLayout from "../components/StatsCardLayout";
-import { useStats } from "../hooks/useStats";
 import { useMemo } from "react";
+import { usePeriodEntries } from "@hooks/usePeriodEntries";
 
 export default function DailyStatsScreen() {
   const {
@@ -17,7 +17,7 @@ export default function DailyStatsScreen() {
     openPeriodPickerSheet,
     onPeriodPickerSheetConfirm,
     noteEntries,
-  } = useStats("day");
+  } = usePeriodEntries("day");
 
   const dateChipList = useMemo(() => {
     const selectedYM = getYearMonth(selectedDate);

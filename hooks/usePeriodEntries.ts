@@ -1,21 +1,29 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useFocusEffect } from "expo-router";
 import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
 import {
   getMoodEntries,
   MoodEntryType,
 } from "@features/mood/services/moodStorage";
-import { useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
 
-type RangeType = "day" | "month" | "year";
+export type RangeType = "day" | "month" | "year";
+
+type UsePeriodEntriesOptions = {
+  /** 화면 재진입 시 오늘(today)로 리셋할지 (기본값: true) */
+  resetOnFocus?: boolean;
+};
 
 /**
- * 공통 통계 조회 훅
- * - Daily / Monthly / Yearly 화면에서 공유
- * - 선택된 날짜와 해당 범위(range)에 맞는 감정 기록을 관리
+ * 기간별(일/월/년) 감정 기록을 공통으로 관리하는 훅
+ * - 날짜 상태, BottomSheet 제어, 데이터 로드/리로드를 제공
+ * - 통계/히스토리 화면 모두에서 재사용
  */
-export function useStats(range: RangeType) {
+export function usePeriodEntries(
+  range: RangeType,
+  opts?: UsePeriodEntriesOptions
+) {
+  const { resetOnFocus = true } = opts ?? {};
   const today = new Date();
-  /** 기간 선택 BottomSheet ref */
   const periodPickerSheetRef = useRef<AppBottomSheetRef>(null);
 
   /** 현재 선택된 기준 날짜 (기본: 오늘) */
@@ -41,15 +49,23 @@ export function useStats(range: RangeType) {
     [range]
   );
 
+  /** 현재 선택 날짜 기준으로 재로딩 */
+  const reload = useCallback(() => {
+    return load(selectedDate);
+  }, [load, selectedDate]);
+
   /**
-   * 탭/화면에 다시 포커스될 때마다
-   * 선택 날짜를 '오늘'로 초기화 후 즉시 로드
+   * 탭/화면에 다시 포커스될 때 동작
+   * - 기본: 오늘로 초기화 후 즉시 로드
+   * - resetOnFocus=false 면 리셋하지 않음
    */
   useFocusEffect(
     useCallback(() => {
-      setSelectedDate(today);
-      load(today);
-    }, [load])
+      if (resetOnFocus) {
+        setSelectedDate(today);
+        load(today);
+      }
+    }, [resetOnFocus, load])
   );
 
   /** 선택 날짜가 변경될 때마다 기록 재로드 */
@@ -58,12 +74,18 @@ export function useStats(range: RangeType) {
   }, [selectedDate, load]);
 
   return {
+    // state
     selectedDate,
     setSelectedDate,
+    noteEntries,
+    isLoading,
+
+    // bottom sheet controls
     periodPickerSheetRef,
     openPeriodPickerSheet,
     onPeriodPickerSheetConfirm,
-    noteEntries,
-    isLoading,
+
+    // actions
+    reload,
   };
 }
