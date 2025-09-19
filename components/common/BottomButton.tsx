@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppButton, type VariantType, type SizeType } from "./AppButton";
 import { useTheme } from "@providers/ThemeProvider";
-import { BOTTOM_BAR_HEIGHT } from "@constants/styles.constant";
+import { BOTTOM_BAR_HEIGHT } from "@constants/styles";
 
 type BottomButtonPropsType = {
   title: string;

@@ -7,11 +7,7 @@ import { preloadMoodImages } from "@features/mood/services/moodAssets";
 
 SplashScreen.preventAutoHideAsync().catch(() => {}); // 스플래시 자동숨김 방지
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [isFontsLoaded] = useFonts({
     "binggrae-bold": require("@assets/fonts/Binggrae-Bold.otf"),
     binggrae: require("@assets/fonts/Binggrae.otf"),

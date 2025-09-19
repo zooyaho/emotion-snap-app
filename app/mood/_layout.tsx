@@ -1,5 +1,5 @@
 import { AppHeader } from "@components/common/AppHeader";
-import { ROUTE_NAME } from "constants/routes";
+import { ROUTE_NAME } from "@navigation/routes";
 import { Stack } from "expo-router";
 
 export default function MoodLayout() {

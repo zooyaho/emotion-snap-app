@@ -13,7 +13,7 @@ import { ThemedIonicon } from "@components/common/ThemedIonicon";
 import { getMoodHex } from "../utils/moodColors";
 import { useCallback, useRef, useState } from "react";
 import { router } from "expo-router";
-import { HREF } from "@constants/routes";
+import { HREF } from "@navigation/routes";
 import { AppModal } from "@components/common/AppModal";
 import useModal from "@hooks/useModal";
 import { format } from "date-fns";
