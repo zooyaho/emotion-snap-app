@@ -148,7 +148,7 @@ export default function DailyStatsScreen() {
 
       {/* 감정 흐름 카드 영역 */}
       <StatsCardLayout title="감정 흐름">
-        <MoodTrendCard noteEntries={noteEntries} />
+        <MoodTrendCard mode="day" noteEntries={noteEntries} />
       </StatsCardLayout>
 
       {/* 연/월 선택 BottomSheet */}

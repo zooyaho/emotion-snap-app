@@ -1,5 +1,5 @@
 import { MoodEntryType } from "@features/mood/services/moodStorage";
-import MoodTrendChart from "./MoodTrendChart";
+import MoodTrendChart, { MoodTrendChartModeType } from "./MoodTrendChart";
 import { Pressable, View, Text } from "react-native";
 import { ThemedIonicon } from "@components/common/ThemedIonicon";
 import MoodScoreGuideSheet from "./MoodScoreGuideSheet";
@@ -7,10 +7,14 @@ import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
 import { useRef } from "react";
 
 type MoodTrendCardPropsType = {
+  mode: MoodTrendChartModeType;
   noteEntries: MoodEntryType[];
 };
 
-export default function MoodTrendCard({ noteEntries }: MoodTrendCardPropsType) {
+export default function MoodTrendCard({
+  mode,
+  noteEntries,
+}: MoodTrendCardPropsType) {
   const moodScoreGuideSheetRef = useRef<AppBottomSheetRef>(null);
 
   /** MoodScoreGuideSheet open 핸들러 */
@@ -34,7 +38,7 @@ export default function MoodTrendCard({ noteEntries }: MoodTrendCardPropsType) {
           <Text className="text-xs text-neutral-400">점수 안내</Text>
         </Pressable>
         {/* 감정 흐름 차트 */}
-        <MoodTrendChart mode="day" noteEntries={noteEntries} />
+        <MoodTrendChart mode={mode} noteEntries={noteEntries} />
       </View>
       {/* 점수 안내 시트 */}
       <MoodScoreGuideSheet ref={moodScoreGuideSheetRef} />

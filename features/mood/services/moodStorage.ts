@@ -90,22 +90,6 @@ export const getMoodEntries = async (
 export const getTodayMoodEntries = () => getMoodEntries({ range: "day" });
 
 /**
- * 특정 월의 감정 기록 조회
- * @param date 기준 날짜 (없으면 현재 월)
- * @returns 해당 월의 감정 기록 배열
- */
-export const getMonthMoodEntries = (date?: Date | number) =>
-  getMoodEntries({ range: "month", date });
-
-/**
- * 특정 년도의 감정 기록 조회
- * @param date 기준 날짜 (없으면 현재 연도)
- * @returns 해당 연도의 감정 기록 배열
- */
-export const getYearMoodEntries = (date?: Date | number) =>
-  getMoodEntries({ range: "year", date });
-
-/**
  * ID로 특정 감정 기록 조회
  * @param id 찾고 싶은 기록의 ID
  * @returns 해당 감정 기록 (없으면 undefined)

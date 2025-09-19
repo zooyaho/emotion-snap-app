@@ -6,10 +6,10 @@ import getColorByTwToken from "@utils/getColorByTwToken";
 import { MOOD_SCORE } from "@features/mood/data/mood.data";
 import type { MoodEntryType } from "@features/mood/services/moodStorage";
 
-type Mode = "day" | "month" | "year";
+export type MoodTrendChartModeType = "day" | "month" | "year";
 
 type MoodTrendChartPropsType = {
-  mode: Mode;
+  mode: MoodTrendChartModeType;
   noteEntries: MoodEntryType[];
   /** 차트 높이 제어용(섹션 높이). 기본 30 */
   stepHeight?: number;

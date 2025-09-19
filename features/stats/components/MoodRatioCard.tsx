@@ -9,10 +9,10 @@ import MoodPercentGrid from "./MoodPercentGrid";
 import MoodPosNegPieChart from "./MoodPosNegPieChart";
 import FadeSlideCollapsible from "@components/animation/FadeSlideCollapsible";
 
-type Mode = "day" | "month" | "year";
+type ModeType = "day" | "month" | "year";
 
 type MoodRatioCardPropsType = {
-  mode: Mode;
+  mode: ModeType;
   noteEntries: MoodEntryType[];
 };
 
@@ -51,7 +51,11 @@ export default function MoodRatioCard({
   } = useMemo(() => buildMoodChartPosNegData(noteEntries), [noteEntries]);
   const isEmpty = total === 0;
 
-  const getSummaryMessage = (mode: Mode, posPct: number, negPct: number) => {
+  const getSummaryMessage = (
+    mode: ModeType,
+    posPct: number,
+    negPct: number
+  ) => {
     if (isEmpty) return "순간의 감정을 기록해 보세요";
     if (posPct > negPct) return SUMMARY_MESSAGES[mode].pos;
     if (posPct < negPct) return SUMMARY_MESSAGES[mode].neg;
