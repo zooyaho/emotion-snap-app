@@ -14,9 +14,6 @@ import { ko } from "date-fns/locale";
 
 export type YearMonthType = { year: number; month: number }; // 1~12
 
-export const ymLabel = (ym: YearMonthType) => `${ym.year}년 ${ym.month}월`;
-export const yLabel = (year: number) => `${year}년`;
-
 /**
  * 특정 연·월에 해당하는 모든 날짜 정보를 반환합니다.
  *

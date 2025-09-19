@@ -1,40 +1,51 @@
 import { Pressable, Text } from "react-native";
 import { cn } from "@utils/cn";
-import { YearMonthType, ymLabel, yLabel } from "@utils/date";
 import { ThemedIonicon } from "./ThemedIonicon";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+
+type ModeType = "day" | "year-month" | "year";
 
 type PeriodPickerButtonPropsType = {
-  /** 현재 선택된 값 */
-  value: YearMonthType | { year: number };
-  /** 월까지 표시 여부 (기본: true) */
-  showMonth?: boolean;
+  /** 현재 선택된 값  */
+  value: Date;
+  /** 표시 모드 */
+  mode: ModeType;
   /** 버튼 눌렀을 때 실행 (보통 BottomSheet present) */
   onPress: () => void;
   className?: string;
-  /** 접근성 라벨 */
   ariaLabel?: string;
   textClassName?: string;
 };
 
 export default function PeriodPickerButton({
   value,
-  showMonth = true,
+  mode,
   onPress,
   className,
   ariaLabel,
   textClassName,
 }: PeriodPickerButtonPropsType) {
-  const label =
-    "month" in value && showMonth
-      ? ymLabel(value as YearMonthType)
-      : yLabel(value.year);
+  let label: string;
+
+  switch (mode) {
+    case "day":
+      label = format(value, "yyyy년 M월 d일", { locale: ko });
+      break;
+    case "year-month":
+      label = format(value, "yyyy년 M월", { locale: ko });
+      break;
+    case "year":
+      label = format(value, "yyyy년", { locale: ko });
+      break;
+  }
 
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={ariaLabel ?? `${label} 선택`}
-      className={cn("self-start flex-row items-center", className)}
+      className={cn("self-start flex-row items-center px-4", className)}
     >
       <Text
         className={cn("text-xl font-semibold text-neutral-600", textClassName)}
