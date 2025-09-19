@@ -18,7 +18,7 @@ import { MoodEntryType } from "@features/mood/services/moodStorage";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import DateChip from "@components/common/DateChip";
 import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
-import YearMonthDayPickerSheet from "@components/common/YearMonthDayPickerSheet";
+import YearMonthDayPickerSheet from "@components/YearMonthDayPickerSheet";
 
 export const dummyMoods: MoodEntryType[] = [
   {
@@ -76,9 +76,9 @@ export default function Settings() {
 
   const openPicker = () => sheetRef.current?.present();
 
-  const handleConfirm = ({ year, month }: { year: number; month: number }) => {
+  const handleConfirm = (date: Date) => {
     // 선택 결과로 목록 필터링/차트 업데이트 등
-    console.log("선택된 연월:", year, month);
+    console.log("선택된 연월:", date);
   };
 
   return (

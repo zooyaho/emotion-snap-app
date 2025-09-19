@@ -1,6 +1,6 @@
 import { Pressable, Text } from "react-native";
 import { cn } from "@utils/cn";
-import { ThemedIonicon } from "./ThemedIonicon";
+import { ThemedIonicon } from "./common/ThemedIonicon";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 

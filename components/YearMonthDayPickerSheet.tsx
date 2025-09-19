@@ -23,7 +23,7 @@ import {
 } from "react";
 import { View } from "react-native";
 import { Picker } from "react-native-wheel-pick";
-import { AppButton } from "./AppButton";
+import { AppButton } from "./common/AppButton";
 import {
   getAvailableDays,
   getAvailableMonths,
