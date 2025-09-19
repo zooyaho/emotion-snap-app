@@ -15,7 +15,8 @@
       "@features/*": ["features/*"],
       "@utils/*": ["utils/*"],
       "@types/*": ["types/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@navigation/*": ["navigation/*"]
     }
   }
 }
