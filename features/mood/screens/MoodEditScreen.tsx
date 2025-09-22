@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import MoodAddCompleteModal from "../components/MoodAddCompleteModal";
 import MoodFieldCard from "../components/MoodFieldCard";
-import useMood from "../hooks/useMood";
+import useMoodEntryForm from "../hooks/useMoodEntryForm";
 import { MoodIdType } from "../types/mood.type";
 import LoadingIndicator from "@components/common/LoadingIndicator";
 import { useEffect } from "react";
@@ -25,7 +25,7 @@ export default function MoodEditScreen({ moodId }: MoodEditScreenPropsType) {
     isSubmitting,
     isInitialDataLoading,
     isNotFound,
-  } = useMood("edit", moodId);
+  } = useMoodEntryForm("edit", moodId);
 
   const handleMoodPick = (pickedMoodId: MoodIdType) => {
     // console.log("pickedMoodId", pickedMoodId);

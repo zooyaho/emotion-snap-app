@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import MoodAddCompleteModal from "../components/MoodAddCompleteModal";
 import MoodFieldCard from "../components/MoodFieldCard";
-import useMood from "../hooks/useMood";
+import useMoodEntryForm from "../hooks/useMoodEntryForm";
 import { MoodIdType } from "../types/mood.type";
 
 export function MoodAddScreen() {
@@ -17,7 +17,7 @@ export function MoodAddScreen() {
     isValid,
     submit,
     isSubmitting,
-  } = useMood("add");
+  } = useMoodEntryForm("add");
 
   const handleMoodPick = (pickedMoodId: MoodIdType) => {
     // console.log("pickedMoodId", pickedMoodId);

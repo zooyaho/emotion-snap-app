@@ -84,12 +84,6 @@ export const getMoodEntries = async (
 };
 
 /**
- * 오늘의 감정 기록 조회
- * @returns 오늘 작성된 감정 기록 배열
- */
-export const getTodayMoodEntries = () => getMoodEntries({ range: "day" });
-
-/**
  * ID로 특정 감정 기록 조회
  * @param id 찾고 싶은 기록의 ID
  * @returns 해당 감정 기록 (없으면 undefined)
