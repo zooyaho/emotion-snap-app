@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { Modal, Text, View, Pressable, Animated, Easing } from "react-native";
-import { AppButton } from "./AppButton";
-import { cn } from "@utils/cn";
 import { ModalControllerType } from "@hooks/useModal";
+import { cn } from "@utils/cn";
+import React from "react";
+import { Animated, Modal, Pressable, Text, View } from "react-native";
+import { AppButton } from "./AppButton";
 
 export type AppModalPropsType = {
   controller: ModalControllerType;

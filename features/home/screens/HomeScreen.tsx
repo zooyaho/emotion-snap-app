@@ -10,7 +10,9 @@ import { ScrollView, Text, View } from "react-native";
 import MoodImage from "../../mood/components/MoodImage";
 
 export default function HomeScreen() {
-  const { noteEntries, isLoading, reload } = usePeriodEntries("day");
+  const { noteEntries, isInitialLoading, reload } = usePeriodEntries("day", {
+    resetOnFocus: false,
+  });
 
   // 삭제 핸들러
   const handleDelete = async (id: string) => {
@@ -39,7 +41,7 @@ export default function HomeScreen() {
 
       {/* 기록 리스트 */}
       <View className="mt-6 gap-4">
-        {isLoading ? (
+        {isInitialLoading ? (
           <View className="mt-16 items-center justify-center">
             <LoadingIndicator />
           </View>

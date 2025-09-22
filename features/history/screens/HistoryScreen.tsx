@@ -8,18 +8,18 @@ import { removeMoodEntry } from "@features/mood/services/moodStorage";
 import { usePeriodEntries } from "@hooks/usePeriodEntries";
 import { getMonthDays, getYearMonth } from "@utils/date";
 import { useMemo } from "react";
-import { Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 export default function HistoryScreen() {
   const {
+    isInitialLoading,
     selectedDate,
     setSelectedDate,
     periodPickerSheetRef,
     openPeriodPickerSheet,
     onPeriodPickerSheetConfirm,
     noteEntries,
-    isLoading,
     reload,
   } = usePeriodEntries("day");
 
@@ -52,7 +52,7 @@ export default function HistoryScreen() {
 
       {/* 기록 리스트 */}
       <View className="flex-1 mt-6 gap-4">
-        {isLoading ? (
+        {isInitialLoading ? (
           <View className="mt-40 items-center justify-center">
             <LoadingIndicator />
           </View>
