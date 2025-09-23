@@ -2,7 +2,7 @@ import type { MoodIdType } from "@features/mood/types/mood.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useModal, { ModalControllerType } from "@hooks/useModal";
 import { HREF } from "@navigation/routes";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ import {
   getMoodEntryById,
   updateMoodEntry,
 } from "../services/moodStorage";
+import { format } from "date-fns";
 
 type ModeType = "add" | "edit";
 
@@ -25,8 +26,10 @@ type ReturnType = {
   noteValue: string;
   setMoodValue: (m: MoodIdType) => void;
   setNoteValue: (n: string) => void;
+
   // submit
   submit: () => void;
+
   // states
   isValid: boolean;
   isSubmitting: boolean;
@@ -41,6 +44,7 @@ export default function useMoodEntryForm(
   mode: ModeType,
   moodId?: string
 ): ReturnType {
+  const queryClient = useQueryClient();
   const successModalController = useModal();
 
   const {
@@ -71,7 +75,10 @@ export default function useMoodEntryForm(
         });
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      const date = format(Date.now(), "yyyy-MM-dd");
+      const queryKey = ["entries", "day", date] as const;
+      await queryClient.invalidateQueries({ queryKey });
       successModalController.open();
     },
     onError: (error) => {

@@ -23,7 +23,7 @@ type MoodNoteCardPropsType = {
   moodId: MoodIdType;
   createdDate: number | Date;
   content: string;
-  onDeletePress?: (id: string) => Promise<void>;
+  onDeletePress?: (id: string) => Promise<void> | void;
   containerClassName?: string;
 };
 

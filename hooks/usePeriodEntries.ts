@@ -76,6 +76,7 @@ export function usePeriodEntries(
     selectedDate,
     setSelectedDate,
     noteEntries,
+    queryKey,
 
     // 로딩 상태
     isLoading: isPending || isFetching,

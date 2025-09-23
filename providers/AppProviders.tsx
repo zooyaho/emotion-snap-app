@@ -4,7 +4,7 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ThemeProvider } from "@providers/ThemeProvider";
 
 import NetInfo from "@react-native-community/netinfo";
-import { AppState } from "react-native";
+import { AppState, LogBox } from "react-native";
 import {
   QueryClient,
   QueryClientProvider,
@@ -33,6 +33,11 @@ export default function AppProviders({
       onlineManager.setOnline(!!state.isConnected);
     });
     return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    // React 18 + StrictMode 환경에서 Modal/Animated 때문에 뜨는 경고 무시
+    LogBox.ignoreLogs(["useInsertionEffect must not schedule updates"]);
   }, []);
 
   return (

@@ -6,24 +6,34 @@ import { usePeriodEntries } from "@hooks/usePeriodEntries";
 import { cn } from "@utils/cn";
 import { format } from "date-fns";
 import { useMemo } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import MoodImage from "../../mood/components/MoodImage";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function HomeScreen() {
-  const { noteEntries, isInitialLoading, reload } = usePeriodEntries("day", {
+  const queryClient = useQueryClient();
+  const { noteEntries, isInitialLoading, queryKey } = usePeriodEntries("day", {
     resetOnFocus: false,
   });
-
-  // 삭제 핸들러
-  const handleDelete = async (id: string) => {
-    await removeMoodEntry(id);
-    await reload();
-  };
 
   const dateLabel = useMemo(() => {
     const today = new Date();
     return format(today, "M월 d일");
   }, []);
+
+  /** 기록 삭제 mutation */
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => removeMoodEntry(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey });
+    },
+    onError: () => {
+      Alert.alert("삭제 실패", "기록을 삭제하지 못했습니다.");
+    },
+  });
+
+  /** 기록 삭제 핸들러 */
+  const handleDeleteNote = (id: string) => deleteMutation.mutate(id);
 
   return (
     <ScrollView
@@ -60,7 +70,7 @@ export default function HomeScreen() {
               moodId={note.moodId}
               createdDate={note.createdAt}
               content={note.note}
-              onDeletePress={handleDelete}
+              onDeletePress={handleDeleteNote}
             />
           ))
         )}

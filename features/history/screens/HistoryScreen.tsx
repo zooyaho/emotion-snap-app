@@ -6,12 +6,14 @@ import MoodImage from "@features/mood/components/MoodImage";
 import MoodNoteCard from "@features/mood/components/MoodNoteCard";
 import { removeMoodEntry } from "@features/mood/services/moodStorage";
 import { usePeriodEntries } from "@hooks/usePeriodEntries";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getMonthDays, getYearMonth } from "@utils/date";
 import { useMemo } from "react";
-import { RefreshControl, Text, View } from "react-native";
+import { Alert, RefreshControl, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 export default function HistoryScreen() {
+  const queryClient = useQueryClient();
   const {
     isInitialLoading,
     selectedDate,
@@ -20,7 +22,7 @@ export default function HistoryScreen() {
     openPeriodPickerSheet,
     onPeriodPickerSheetConfirm,
     noteEntries,
-    reload,
+    queryKey,
   } = usePeriodEntries("day");
 
   const dateChipList = useMemo(() => {
@@ -28,11 +30,19 @@ export default function HistoryScreen() {
     return getMonthDays(selectedYM.year, selectedYM.month);
   }, [selectedDate]);
 
+  /** 기록 삭제 mutation */
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => removeMoodEntry(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey });
+    },
+    onError: () => {
+      Alert.alert("삭제 실패", "기록을 삭제하지 못했습니다.");
+    },
+  });
+
   /** 기록 삭제 핸들러 */
-  const handleDeleteNote = async (id: string) => {
-    await removeMoodEntry(id);
-    await reload();
-  };
+  const handleDeleteNote = (id: string) => deleteMutation.mutate(id);
 
   return (
     <View className="flex-1 pt-6">
