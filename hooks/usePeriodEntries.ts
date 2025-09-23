@@ -1,4 +1,5 @@
 import { AppBottomSheetRef } from "@components/common/AppBottomSheet";
+import { queryKeys, RangeType } from "@constants/queryKeys";
 import {
   getMoodEntries,
   MoodEntryType,
@@ -7,8 +8,6 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef, useState } from "react";
-
-export type RangeType = "day" | "month" | "year";
 
 type UsePeriodEntriesOptions = {
   /** 화면 재진입 시 오늘로 리셋할지 (기본값: true) */
@@ -32,7 +31,7 @@ export function usePeriodEntries(
 
   /** 쿼리 키(날짜는 문자열로 안정화) */
   const selectedKey = format(selectedDate, "yyyy-MM-dd");
-  const queryKey = ["entries", range, selectedKey] as const;
+  const queryKey = queryKeys.mood.entries(range, selectedKey);
 
   /** 데이터 쿼리 */
   const {

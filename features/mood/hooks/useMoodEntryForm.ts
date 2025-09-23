@@ -17,6 +17,7 @@ import {
   updateMoodEntry,
 } from "../services/moodStorage";
 import { format } from "date-fns";
+import { queryKeys } from "@constants/queryKeys";
 
 type ModeType = "add" | "edit";
 
@@ -77,7 +78,8 @@ export default function useMoodEntryForm(
     },
     onSuccess: async () => {
       const date = format(Date.now(), "yyyy-MM-dd");
-      const queryKey = ["entries", "day", date] as const;
+      const queryKey = queryKeys.mood.entries("day", date);
+
       await queryClient.invalidateQueries({ queryKey });
       successModalController.open();
     },
@@ -95,7 +97,7 @@ export default function useMoodEntryForm(
     isError: isGetMoodEntryByIdError,
     isSuccess: isGetMoodEntryByIdSuccess,
   } = useQuery({
-    queryKey: ["moodEntry", moodId],
+    queryKey: queryKeys.mood.entry(moodId!),
     queryFn: () => getMoodEntryById(moodId!),
     enabled: mode === "edit" && !!moodId,
   });
